@@ -10,21 +10,27 @@ The initial dataset covers **73 events** from November 2022 through September 12
 
 The browser loads that file directly. There is no duplicate copy embedded inside HTML, no database, no CMS, and no framework build artifact that must be manually synchronized.
 
-A normal data update is therefore:
+For community-submitted new incidents, the preferred workflow is now:
 
 ```text
-Edit data/incidents.json
+Structured GitHub issue
         ↓
-Open pull request
+needs-verification
         ↓
-GitHub Actions validates schema + chronology + IDs + sources
+Maintainer verifies sources + wording
         ↓
-Maintainer verifies the research
+Maintainer applies `verified`
         ↓
-Merge to main
+GitHub Actions converts the issue into JSON
+        ↓
+Validation + automatic pull request
+        ↓
+Maintainer reviews and merges
         ↓
 GitHub Pages deploys automatically
 ```
+
+Technical contributors can still edit `data/incidents.json` directly in a normal pull request.
 
 ## Project structure
 
@@ -42,6 +48,10 @@ GitHub Pages deploys automatically
 │   ├── stages.json               # Five-stage historical narrative
 │   └── tour.json                 # Guided-tour event IDs
 ├── scripts/
+│   ├── lib/
+│   │   └── issue-promotion.mjs   # Pure issue-form parsing/normalization logic
+│   ├── promote-verified-issue.mjs# Converts verified issue event → dataset change
+│   ├── test-issue-promotion.mjs  # Promotion parser regression tests
 │   ├── validate-data.mjs         # Zero-dependency data validator
 │   ├── audit-data.mjs            # Research-maintenance report
 │   ├── build.mjs                 # Creates deployable dist/
@@ -51,7 +61,11 @@ GitHub Pages deploys automatically
 │   └── enable-pages.sh           # Optional Pages API helper
 ├── .github/
 │   ├── ISSUE_TEMPLATE/           # Structured data/correction forms
-│   ├── workflows/                # CI, Pages deployment, label sync
+│   ├── workflows/
+│   │   ├── ci.yml
+│   │   ├── pages.yml
+│   │   ├── promote-verified-issue.yml
+│   │   └── sync-labels.yml
 │   ├── labels.json
 │   └── PULL_REQUEST_TEMPLATE.md
 ├── docs/
@@ -59,6 +73,7 @@ GitHub Pages deploys automatically
 │   ├── DATA_MODEL.md
 │   ├── DEPLOYMENT.md
 │   ├── EDITORIAL_POLICY.md
+│   ├── ISSUE_AUTOMATION.md
 │   ├── MAINTAINER_TRIAGE.md
 │   └── METHODOLOGY.md
 ├── CONTRIBUTING.md
@@ -99,20 +114,22 @@ This validates the data, builds `dist/`, and serves the exact deployable output.
 ## Validation
 
 ```bash
-npm run validate
+npm run check
 ```
 
-The validator checks, among other things:
+The project checks include:
 
-- required fields
+- incident-data validation
 - stable unique IDs
 - valid ISO dates
 - chronological ordering
 - allowed evidence/category/theme values
 - impact range
-- source structure
-- HTTPS source URLs
+- source structure and HTTPS URLs
 - stage/tour references
+- browser JavaScript syntax
+- verified-issue promotion parser tests
+- production build
 
 A pull request cannot pass CI if these checks fail.
 
@@ -138,9 +155,17 @@ Use **Issues → New issue** for structured forms:
 - Correct/update an existing incident
 - Report a site bug
 
-Data submissions are automatically labeled `needs-verification` after the label-sync workflow has created the repository labels.
+New incident submissions begin as `data-submission` + `needs-verification`.
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md).
+After independent research review, a maintainer can apply `verified`. The `Promote verified incident` workflow then parses the structured issue, generates the canonical record, validates it, creates a branch, and opens a pull request. Nothing is merged automatically.
+
+### One-time automation setting
+
+For automatic pull-request creation, enable:
+
+**Settings → Actions → General → Workflow permissions → Allow GitHub Actions to create and approve pull requests**
+
+See [`docs/ISSUE_AUTOMATION.md`](docs/ISSUE_AUTOMATION.md) and [`docs/MAINTAINER_TRIAGE.md`](docs/MAINTAINER_TRIAGE.md).
 
 ## Licensing
 
@@ -152,7 +177,7 @@ See [`LICENSE.md`](LICENSE.md).
 
 ## Maintainer convenience
 
-To insert a fully prepared record and keep chronology sorted:
+To insert a fully prepared record manually and keep chronology sorted:
 
 ```bash
 npm run add:incident -- /path/to/record.json

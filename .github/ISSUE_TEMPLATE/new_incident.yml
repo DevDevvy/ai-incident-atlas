@@ -7,30 +7,39 @@ body:
     attributes:
       value: |
         Thanks for contributing. Search existing issues and `data/incidents.json` first. Prefer primary sources and clearly distinguish evaluations from real-world incidents.
+
+        Once a maintainer independently verifies the submission, applying the `verified` label can automatically convert this form into a dataset pull request. Please use the requested formats carefully.
+
   - type: input
     id: event_date
     attributes:
       label: Event date
-      description: Use the date the event happened, not merely the article publication date.
+      description: "Use the date the event happened, not merely the article publication date. Required format: YYYY-MM-DD."
       placeholder: "2026-09-12"
     validations: { required: true }
+
   - type: input
     id: display_date
     attributes:
       label: Display date / range
+      description: Optional. Leave blank for a date automatically generated from Event date.
       placeholder: "Sep 12, 2026 or Nov 17–21, 2023"
+
   - type: input
     id: incident_title
     attributes:
       label: Proposed factual title
+      description: Keep this specific, factual, and non-sensational. The stable incident ID will be generated from this title.
       placeholder: "Anthropic researcher resigns and raises AI safety concerns"
     validations: { required: true }
+
   - type: input
     id: organization
     attributes:
       label: Organization / model / person
       placeholder: "Anthropic / Jane Doe"
     validations: { required: true }
+
   - type: dropdown
     id: evidence
     attributes:
@@ -45,6 +54,7 @@ body:
         - POLICY — warning, governance proposal, or institutional safety response
         - CONTESTED — material public claims remain disputed
     validations: { required: true }
+
   - type: dropdown
     id: category
     attributes:
@@ -63,12 +73,14 @@ body:
         - Real-world agent failure
         - Security / cyber
     validations: { required: true }
+
   - type: dropdown
     id: confidence
     attributes:
       label: Confidence in the core factual claim
       options: [High, Medium, Low]
     validations: { required: true }
+
   - type: dropdown
     id: impact
     attributes:
@@ -81,48 +93,72 @@ body:
         - "4 — major"
         - "5 — major turning point"
     validations: { required: true }
+
   - type: textarea
     id: summary
     attributes:
       label: What happened?
       description: Give a concise factual summary. Include numbers only when directly supported.
     validations: { required: true }
+
   - type: textarea
     id: why
     attributes:
       label: Why does it matter?
       description: Explain what this adds to the broader AI timeline or progression.
     validations: { required: true }
+
   - type: textarea
     id: caveat
     attributes:
       label: What does this NOT prove / important caveat?
       description: Separate capability from intent, allegations from findings, and lab behavior from production behavior.
     validations: { required: true }
+
   - type: textarea
     id: sources
     attributes:
       label: Sources
-      description: One source per line. Prefer primary sources first and say what each supports.
+      description: One source per line. Use plain HTTPS URLs. Prefer `Primary — URL — what it supports` or `Reuters — URL — what it supports`.
       placeholder: |
         Primary — https://example.com/report — technical incident details
         Reuters — https://reuters.com/... — independent chronology confirmation
     validations: { required: true }
+
   - type: textarea
     id: tags
     attributes:
       label: Suggested tags
+      description: Required for automatic promotion. Use comma-separated concepts, models, people, or mechanisms.
       placeholder: "shutdown resistance, agent autonomy, cyber evaluation"
-  - type: textarea
+    validations: { required: true }
+
+  - type: dropdown
     id: themes
     attributes:
       label: Suggested Atlas themes
-      placeholder: "Agents & autonomy, Cyber & containment"
+      description: Required for automatic promotion. Select every existing Atlas theme that materially applies.
+      multiple: true
+      options:
+        - Reliability & hallucination
+        - Deception & scheming
+        - Agents & autonomy
+        - Cyber & containment
+        - Governance & insiders
+        - Human safety & dependency
+        - Privacy & surveillance
+        - Deepfakes & misuse
+        - Copyright & rights
+        - Labor & society
+        - Other
+    validations: { required: true }
+
   - type: textarea
     id: notes
     attributes:
       label: Additional verification notes
       description: Conflicting reports, archive links, chronology questions, or quote locations.
+
   - type: checkboxes
     id: checklist
     attributes:
