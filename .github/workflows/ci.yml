@@ -2,6 +2,8 @@ name: Validate project
 
 on:
   pull_request:
+    paths-ignore:
+      - data/incidents.json
   push:
     branches: [main]
 
