@@ -13,6 +13,7 @@
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="stylesheet" href="./assets/styles.css">
+<link rel="stylesheet" href="./assets/enhancements.css">
 <title>AI Incident Atlas</title>
 </head>
 <body>
@@ -47,6 +48,17 @@
       <aside class="snapshot"><h3>Incident volume by year</h3><div class="yearbars" id="yearBars"></div></aside>
     </div>
     <div class="statgrid"><div class="stat"><b id="statTotal">0</b><span>documented items</span></div><div class="stat"><b id="statCross">0</b><span>eval → real crossings</span></div><div class="stat"><b id="statEval">0</b><span>controlled evaluations</span></div><div class="stat"><b id="statGov">0</b><span>governance / warnings</span></div><div class="stat"><b id="statSources">0</b><span>source links</span></div></div>
+
+    <section class="atlas-overview" aria-labelledby="overviewTitle">
+      <div class="atlas-overview-head">
+        <div><h2 id="overviewTitle">The whole progression at a glance</h2><p>Every dot is a documented event. Color shows evidence type, size emphasizes major turning points.</p></div>
+        <div class="overview-legend" id="overviewLegend" aria-label="Evidence legend"></div>
+      </div>
+      <div class="overview-scroll" tabindex="0" aria-label="Scrollable overview timeline">
+        <div class="overview-timeline"><div class="overview-axis"></div><div id="overviewYears"></div><div id="overviewTimeline"></div></div>
+      </div>
+      <div class="overview-summary"><strong id="overviewCount">Loading timeline overview…</strong><span class="hint">Scroll horizontally and click a dot to jump into the full timeline.</span></div>
+    </section>
   </div>
 </section>
 
@@ -98,6 +110,21 @@
   </section>
 </main>
 
+<section class="workflow-section" aria-labelledby="workflowTitle">
+  <div class="workflow-panel">
+    <div class="workflow-head"><div><div class="workflow-kicker">Open research workflow</div><h2 id="workflowTitle">From a GitHub issue to the live Atlas</h2><p>Contributors provide the research. Automation handles the repetitive data plumbing while human verification and review stay in the loop.</p></div><span class="workflow-badge">Human verified · automation assisted</span></div>
+    <div class="workflow-grid">
+      <article class="workflow-step"><div class="workflow-number">1</div><h3>Submit</h3><p>Open a structured issue with the event, sources, evidence type, themes, impact and caveat.</p><a class="workflow-chip" data-workflow-link="issues" href="#">Open issue form ↗</a></article>
+      <article class="workflow-step"><div class="workflow-number">2</div><h3>Verify</h3><p>A maintainer checks the sources, wording, classification and duplicate risk before applying <code>verified</code>.</p><span class="workflow-chip">needs-verification → verified</span></article>
+      <article class="workflow-step"><div class="workflow-number">3</div><h3>Generate</h3><p>GitHub Actions parses the issue, creates canonical incident data, runs project checks and opens a clean branch.</p><span class="workflow-chip good">✓ npm run check</span></article>
+      <article class="workflow-step"><div class="workflow-number">4</div><h3>Review</h3><p>An automated data-only pull request is opened. A human reviews the generated record and sources before merge.</p><span class="workflow-chip">PR + validated JSON</span></article>
+      <article class="workflow-step"><div class="workflow-number">5</div><h3>Merge</h3><p>The approved PR lands in <code>main</code>. The source issue is finalized as published and closed.</p><span class="workflow-chip good">✓ published</span></article>
+      <article class="workflow-step"><div class="workflow-number">6</div><h3>Publish</h3><p>GitHub Pages rebuilds from the canonical dataset and the new incident becomes part of the live research tool.</p><span class="workflow-chip">live Atlas</span></article>
+    </div>
+    <div class="workflow-footer"><span><b>Open data. Open source. Human-reviewed.</b> The workflow is documented in the repository.</span><a class="softbtn" data-workflow-link="repo" href="#">View the code and workflow ↗</a></div>
+  </div>
+</section>
+
 <section class="contribute-section"><div class="section-card contribute-grid"><div><div class="story-kicker">Community research</div><h2 style="font-size:30px;letter-spacing:-.04em;margin:8px 0 9px">Know about an incident we should add or correct?</h2><p style="color:#aebcd0;line-height:1.65;margin:0">Submit it through a structured GitHub form. Proposed data is independently verified before it enters the canonical dataset.</p></div><div class="contribute-actions"><a id="newIncidentLink" class="primarybtn" href="#">Submit a new incident ↗</a><a id="updateIncidentLink" class="softbtn" href="#">Correct / update an incident ↗</a><a id="githubRepoLink" class="softbtn" href="#">View the GitHub repository ↗</a></div></div></section>
 
 <footer class="footer"><div class="footer-inner"><div><strong style="color:#94a7be">AI Incident Atlas</strong><br><span id="footerSnapshot">Research dataset</span>. Bookmarks and personal notes stay in your browser.</div><div class="footer-links"><a href="./data/incidents.json">Dataset</a><a id="footerRepo" href="#">GitHub</a><a href="./docs/METHODOLOGY.md">Methodology source</a></div></div></footer>
@@ -109,5 +136,6 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <noscript><div class="fatal"><h2>JavaScript is required</h2><p>The Atlas is an interactive static application. Enable JavaScript to load the incident dataset.</p></div></noscript>
 <script type="module" src="./assets/app.js"></script>
+<script type="module" src="./assets/enhancements.js"></script>
 </body>
 </html>
