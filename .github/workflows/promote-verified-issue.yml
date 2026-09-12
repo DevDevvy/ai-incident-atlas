@@ -8,6 +8,7 @@ permissions:
   contents: write
   pull-requests: write
   issues: write
+  statuses: write
 
 concurrency:
   group: promote-issue-${{ github.event.issue.number }}
@@ -18,7 +19,8 @@ jobs:
     if: >-
       github.event.label.name == 'verified' &&
       contains(github.event.issue.labels.*.name, 'data-submission') &&
-      !contains(github.event.issue.labels.*.name, 'pr-created')
+      !contains(github.event.issue.labels.*.name, 'pr-created') &&
+      !contains(github.event.issue.labels.*.name, 'published')
     runs-on: ubuntu-latest
 
     steps:
@@ -37,8 +39,8 @@ jobs:
       - name: Convert verified issue into incident data
         run: node scripts/promote-verified-issue.mjs
 
-      - name: Validate generated dataset
-        run: npm run validate
+      - name: Run full project validation
+        run: npm run check
 
       - name: Create promotion branch and commit
         id: branch
@@ -61,7 +63,21 @@ jobs:
           fi
 
           git commit -m "Promote verified incident from issue #${ISSUE_NUMBER}"
+          sha=$(git rev-parse HEAD)
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
           git push origin "$branch"
+
+      - name: Publish promotion validation status
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ steps.branch.outputs.sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh api --method POST "repos/$GITHUB_REPOSITORY/statuses/$SHA" \
+            -f state=success \
+            -f context='atlas/promotion-validation' \
+            -f description='Generated record passed npm run check' \
+            -f target_url="$RUN_URL"
 
       - name: Open pull request
         id: pr
@@ -71,12 +87,23 @@ jobs:
           BRANCH: ${{ steps.branch.outputs.branch }}
         run: |
           set -euo pipefail
+          body_file="$RUNNER_TEMP/pr-body.md"
+          cat > "$body_file" <<EOF
+          Generated automatically from verified data-submission issue #${ISSUE_NUMBER}.
+
+          <!-- atlas-source-issue: ${ISSUE_NUMBER} -->
+
+          Closes #${ISSUE_NUMBER}
+
+          The generated record passed the full project check before this PR was opened. Review the dataset diff and the `atlas/promotion-validation` status before merging.
+          EOF
+
           pr_url=$(gh pr create \
             --repo "$GITHUB_REPOSITORY" \
             --base main \
             --head "$BRANCH" \
             --title "Promote verified incident from issue #${ISSUE_NUMBER}" \
-            --body "Generated automatically from verified data-submission issue #${ISSUE_NUMBER}.\n\nCloses #${ISSUE_NUMBER}\n\nReview the generated record and CI checks before merging.")
+            --body-file "$body_file")
           echo "url=$pr_url" >> "$GITHUB_OUTPUT"
 
       - name: Update source issue
@@ -89,8 +116,15 @@ jobs:
           gh issue edit "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" \
             --remove-label "needs-verification" \
             --add-label "pr-created"
-          gh issue comment "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" \
-            --body "✅ Verified submission promoted automatically to a dataset pull request: ${PR_URL}\n\nThe incident is not live until that PR passes CI and is merged."
+          gh issue edit "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" --remove-label "promotion-failed" || true
+
+          comment_file="$RUNNER_TEMP/issue-comment.md"
+          cat > "$comment_file" <<EOF
+          ✅ Verified submission promoted automatically to a dataset pull request: ${PR_URL}
+
+          The generated dataset passed the full project check before the PR was opened. The incident is not live until the PR is reviewed and merged.
+          EOF
+          gh issue comment "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" --body-file "$comment_file"
 
       - name: Report promotion failure
         if: failure()
@@ -100,5 +134,10 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           gh issue edit "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" --add-label "promotion-failed" || true
-          gh issue comment "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" \
-            --body "❌ Automatic promotion failed. No change has been merged into the Atlas. Review the workflow run for the validation or automation error: ${RUN_URL}" || true
+          comment_file="$RUNNER_TEMP/promotion-failed.md"
+          cat > "$comment_file" <<EOF
+          ❌ Automatic promotion failed. No change has been merged into the Atlas.
+
+          Review the workflow run for the validation or automation error: ${RUN_URL}
+          EOF
+          gh issue comment "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" --body-file "$comment_file" || true
