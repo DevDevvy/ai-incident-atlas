@@ -6,11 +6,35 @@ Thank you for helping improve the AI Incident Atlas. The project is intentionall
 
 Use **Issues → New issue → Submit a new AI incident**.
 
-A good submission includes the event date, evidence class, factual summary, why it matters, a mandatory caveat, and strong sources. Primary evidence is preferred.
+A good submission includes the event date, evidence class, factual summary, why it matters, a mandatory caveat, appropriate Atlas themes/tags, and strong sources. Primary evidence is preferred.
+
+The form is deliberately structured so that, after independent maintainer verification, the issue can be converted automatically into a dataset pull request.
+
+## What happens after submission
+
+```text
+submission
+  ↓
+needs-verification
+  ↓
+maintainer checks sources + wording
+  ↓
+verified
+  ↓
+automatic dataset PR
+  ↓
+CI + human PR review
+  ↓
+merge
+```
+
+Applying `verified` is a maintainer action. Public contributors cannot bypass the research review step.
 
 ## Correction / update
 
 Use **Correct or update an existing incident** and identify the stable incident `id` from `data/incidents.json`.
+
+Corrections are not automatically promoted yet because modifying an existing stable record can affect deep links, tours, stages, and historical interpretation.
 
 ## Pull requests
 
@@ -19,11 +43,11 @@ Technical contributors can edit `data/incidents.json` directly. That is the only
 Before opening a PR:
 
 ```bash
-npm run validate
+npm run check
 npm run audit
 ```
 
-The CI workflow runs the same validation automatically.
+The CI workflow runs the same project checks automatically.
 
 ## Evidence hierarchy
 
@@ -60,34 +84,12 @@ For a new record, use lowercase kebab-case, e.g.:
 openai-hugging-face-incident-2026
 ```
 
+The verified-issue automation generates this ID automatically from the proposed factual title.
+
 ## Adding a category or theme
 
 Do not invent a new category/theme only in an incident record. Add it first to `data/site.json`, then use it in `data/incidents.json`. CI will reject unknown values.
 
-## Ready-to-merge record
+## Automation details
 
-```json
-{
-  "id": "example-stable-id",
-  "date": "2026-09-12",
-  "dateLabel": "Sep 12, 2026",
-  "title": "Concise factual title",
-  "org": "Organization / model / person",
-  "category": "Policy & warning",
-  "evidence": "POLICY",
-  "impact": 5,
-  "confidence": "High",
-  "summary": "What happened.",
-  "why": "Why it matters.",
-  "caveat": "What the evidence does not prove.",
-  "tags": ["tag one", "tag two"],
-  "themes": ["Governance & insiders"],
-  "sources": [
-    {
-      "label": "Primary source",
-      "url": "https://example.com/report",
-      "kind": "Primary / official"
-    }
-  ]
-}
-```
+See [`docs/ISSUE_AUTOMATION.md`](docs/ISSUE_AUTOMATION.md).
