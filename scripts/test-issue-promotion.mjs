@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { issueToIncident, parseIssueSections, parseSources } from './lib/issue-promotion.mjs';
+import { insertIncident, issueToIncident, parseIssueSections, parseSources } from './lib/issue-promotion.mjs';
 
 const config = {
   evidenceOrder: ['REAL','EVAL','EVAL → REAL','GOV','LEGAL','MISUSE','POLICY','CONTESTED'],
@@ -57,7 +57,7 @@ The publishers did not publish the false claims.
 ### Sources
 
 Associated Press — https://apnews.com/article/test — reporting
-Apple official — https://www.apple.com/newsroom/test — feature documentation
+Primary - Apple official — https://www.apple.com/newsroom/test — feature documentation
 
 ### Suggested tags
 
@@ -78,7 +78,10 @@ Verified against sources.
 
 const sections = parseIssueSections(body);
 assert.match(sections.get('What happened?'), /second paragraph/);
-assert.equal(parseSources(sections.get('Sources')).length, 2);
+const parsedSources = parseSources(sections.get('Sources'));
+assert.equal(parsedSources.length, 2);
+assert.equal(parsedSources[0].label, 'Associated Press');
+assert.equal(parsedSources[1].label, 'Apple official');
 
 const issue = {
   number: 42,
@@ -98,8 +101,22 @@ assert.throws(
   /verified/
 );
 assert.throws(
+  () => issueToIncident({...issue, labels:[{name:'data-submission'},{name:'verified'},{name:'published'}]}, config, []),
+  /already been promoted/
+);
+assert.throws(
   () => issueToIncident(issue, config, [{...record}]),
   /Duplicate incident id/
 );
 
-console.log('✓ Verified issue promotion parser tests passed.');
+const existing = [
+  {id:'before', date:'2025-01-15'},
+  {id:'same-z', date:'2025-01-16'},
+  {id:'same-a', date:'2025-01-16'},
+  {id:'after', date:'2025-01-17'}
+];
+const inserted = insertIncident(existing, {id:'new', date:'2025-01-16'});
+assert.deepEqual(inserted.map((x)=>x.id), ['before','same-z','same-a','new','after']);
+assert.deepEqual(existing.map((x)=>x.id), ['before','same-z','same-a','after']);
+
+console.log('✓ Verified issue promotion parser and stable insertion tests passed.');
