@@ -1,0 +1,58 @@
+name: Validate incident data PR
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - data/incidents.json
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  validate-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout trusted base code
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+
+      - name: Confirm this is a data-only PR
+        id: scope
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          files=$(gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" --jq '.[].filename')
+          echo "$files"
+          other=$(printf '%s\n' "$files" | grep -vx 'data/incidents.json' || true)
+          if [ -n "$other" ]; then
+            echo "data_only=false" >> "$GITHUB_OUTPUT"
+            echo "This PR changes files beyond data/incidents.json; standard CI handles it."
+          else
+            echo "data_only=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Fetch proposed incident dataset without executing PR code
+        if: steps.scope.outputs.data_only == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/contents/data/incidents.json?ref=$HEAD_SHA" --jq '.content' \
+            | tr -d '\n' \
+            | base64 --decode > data/incidents.json
+
+      - name: Validate proposed dataset with trusted base scripts
+        if: steps.scope.outputs.data_only == 'true'
+        run: npm run check
