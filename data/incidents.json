@@ -938,6 +938,43 @@
     ]
   },
   {
+    "date": "2024-06-04",
+    "dateLabel": "Jun 4, 2024",
+    "title": "Frontier-AI employees publish ‘Right to Warn’ letter demanding whistleblower protections",
+    "org": "OpenAI / Google DeepMind / former Anthropic staff",
+    "category": "Governance & resignation",
+    "evidence": "GOV",
+    "impact": 4,
+    "confidence": "High",
+    "summary": "A group of current and former employees from frontier-AI companies published an open letter arguing that companies held substantial non-public information about model capabilities and risks while facing weak obligations to disclose it. The signatories called for anonymous reporting channels, protection from retaliation, an end to agreements that block risk-related criticism, and the ability to raise serious concerns publicly when internal processes fail.",
+    "why": "The letter shifted AI-safety governance from individual resignations into a coordinated employee-accountability movement. It argued that ordinary whistleblower law was insufficient because many feared AI risks might be serious without yet involving clearly illegal conduct, making internal transparency and protected dissent central parts of frontier-AI governance.",
+    "caveat": "The letter documents the signatories’ concerns and governance recommendations; it is not independent proof that any specific frontier model was about to cause catastrophic harm. Its claims about incentives and oversight are institutional judgments rather than findings from a regulator or court.",
+    "tags": [
+      "Right to Warn",
+      "whistleblowers",
+      "OpenAI",
+      "Google DeepMind",
+      "confidentiality",
+      "AI safety governance"
+    ],
+    "sources": [
+      {
+        "label": "Primary",
+        "url": "https://righttowarn.ai/",
+        "kind": "Primary / official"
+      },
+      {
+        "label": "Reuters",
+        "url": "https://www.reuters.com/technology/openai-google-deepminds-current-former-employees-warn-about-ai-risks-2024-06-04/",
+        "kind": "Reporting"
+      }
+    ],
+    "id": "frontier-ai-employees-publish-right-to-warn-letter-demanding-whistleblower-protections",
+    "themes": [
+      "Governance & insiders"
+    ]
+  },
+  {
     "date": "2024-06-07",
     "dateLabel": "Jun 2024",
     "title": "Microsoft Recall triggers a security and privacy backlash",
