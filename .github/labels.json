@@ -15,6 +15,16 @@
     "description": "Research verification completed"
   },
   {
+    "name": "pr-created",
+    "color": "5319E7",
+    "description": "Verified issue has been promoted to a dataset pull request"
+  },
+  {
+    "name": "promotion-failed",
+    "color": "B60205",
+    "description": "Automatic verified-issue promotion failed and needs maintainer attention"
+  },
+  {
     "name": "source-needed",
     "color": "D93F0B",
     "description": "Stronger or additional sourcing required"
