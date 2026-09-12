@@ -1,0 +1,24 @@
+name: "Report a site bug"
+description: "Report a problem with the UI, filters, mobile layout, exports, links, or other functionality."
+title: "[Site bug]: "
+labels: ["site-bug"]
+body:
+  - type: textarea
+    id: problem
+    attributes: { label: "What happened?" }
+    validations: { required: true }
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open ...
+        2. Click ...
+        3. See ...
+    validations: { required: true }
+  - type: input
+    id: browser
+    attributes: { label: "Browser and device", placeholder: "Chrome on macOS / Safari on iPhone" }
+  - type: textarea
+    id: context
+    attributes: { label: "Screenshots or additional context" }

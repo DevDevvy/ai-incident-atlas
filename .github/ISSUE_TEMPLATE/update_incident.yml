@@ -1,0 +1,55 @@
+name: "Correct or update an existing incident"
+description: "Propose a factual correction, stronger source, classification change, or material update."
+title: "[Update incident]: "
+labels: ["correction", "needs-verification"]
+body:
+  - type: input
+    id: existing_incident
+    attributes:
+      label: Existing incident title
+    validations: { required: true }
+  - type: input
+    id: incident_id
+    attributes:
+      label: Incident ID or approximate date
+      description: The stable `id` can be found in the JSON record.
+    validations: { required: true }
+  - type: dropdown
+    id: update_type
+    attributes:
+      label: What needs to change?
+      multiple: true
+      options: [Date / chronology, Title, Organization / model / person, Evidence classification, Category, Impact, Confidence, Summary / factual claim, Why it matters, Caveat / interpretation, Tags / themes, Add or replace a source, Retraction / remove event, Other]
+    validations: { required: true }
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong, incomplete, or outdated?
+    validations: { required: true }
+  - type: textarea
+    id: proposed_change
+    attributes:
+      label: Proposed corrected wording or data
+      description: Give copy-ready replacement text when possible.
+    validations: { required: true }
+  - type: textarea
+    id: sources
+    attributes:
+      label: Evidence / sources for the change
+      description: One URL per line, strongest source first.
+    validations: { required: true }
+  - type: textarea
+    id: implications
+    attributes:
+      label: Does this change the interpretation or classification?
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Submission checklist
+      options:
+        - label: I checked that the source supports the proposed correction.
+          required: true
+        - label: I understand allegations and disputed claims must remain clearly labeled.
+          required: true
+        - label: I understand the maintainer will independently verify this change before merging it.
+          required: true

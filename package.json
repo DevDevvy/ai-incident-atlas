@@ -1,0 +1,20 @@
+{
+  "name": "ai-incident-atlas",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Interactive research atlas of major AI incidents, evaluations, controversies, and governance milestones.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "validate": "node scripts/validate-data.mjs && node --check assets/app.js",
+    "audit": "node scripts/audit-data.mjs",
+    "build": "node scripts/build.mjs",
+    "check": "npm run validate && npm run build",
+    "dev": "node scripts/serve.mjs . 8080",
+    "preview": "node scripts/build.mjs && node scripts/serve.mjs dist 8080",
+    "add:incident": "node scripts/add-incident.mjs"
+  }
+}

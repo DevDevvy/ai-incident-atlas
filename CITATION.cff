@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use the AI Incident Atlas in research or reporting, please cite the project and the underlying sources for specific factual claims."
+title: "AI Incident Atlas"
+type: dataset
+authors:
+  - family-names: Thomas
+    given-names: Randall
+version: 1.0.0
+date-released: 2026-09-12
+license: CC-BY-4.0

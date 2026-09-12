@@ -1,0 +1,16 @@
+{
+  "name": "AI Incident Atlas",
+  "short_name": "AI Atlas",
+  "description": "A sourced interactive research atlas of major AI incidents, evaluations, controversies, resignations, governance failures, misuse cases, and real-world agent boundary crossings.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#070a10",
+  "theme_color": "#070a10",
+  "icons": [
+    {
+      "src": "./assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/ai-incident-atlas/incidents.schema.json",
+  "title": "AI Incident Atlas incidents dataset",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "id",
+      "date",
+      "dateLabel",
+      "title",
+      "org",
+      "category",
+      "evidence",
+      "impact",
+      "confidence",
+      "summary",
+      "why",
+      "caveat",
+      "tags",
+      "themes",
+      "sources"
+    ],
+    "properties": {
+      "id": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      },
+      "date": {
+        "type": "string",
+        "format": "date"
+      },
+      "dateLabel": {
+        "type": "string",
+        "minLength": 1
+      },
+      "title": {
+        "type": "string",
+        "minLength": 1
+      },
+      "org": {
+        "type": "string",
+        "minLength": 1
+      },
+      "category": {
+        "type": "string",
+        "enum": [
+          "Context milestone",
+          "Evaluation / red team",
+          "Governance & resignation",
+          "Human safety",
+          "Labor & society",
+          "Legal & rights",
+          "Misuse / deepfake",
+          "Model failure",
+          "Policy & warning",
+          "Privacy",
+          "Real-world agent failure",
+          "Security / cyber"
+        ]
+      },
+      "evidence": {
+        "type": "string",
+        "enum": [
+          "REAL",
+          "EVAL",
+          "EVAL → REAL",
+          "GOV",
+          "LEGAL",
+          "MISUSE",
+          "POLICY",
+          "CONTESTED"
+        ]
+      },
+      "impact": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5
+      },
+      "confidence": {
+        "type": "string",
+        "enum": [
+          "High",
+          "Medium",
+          "Low"
+        ]
+      },
+      "summary": {
+        "type": "string",
+        "minLength": 1
+      },
+      "why": {
+        "type": "string",
+        "minLength": 1
+      },
+      "caveat": {
+        "type": "string",
+        "minLength": 1
+      },
+      "tags": {
+        "type": "array",
+        "minItems": 1,
+        "uniqueItems": true,
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "themes": {
+        "type": "array",
+        "minItems": 1,
+        "uniqueItems": true,
+        "items": {
+          "type": "string",
+          "enum": [
+            "Reliability & hallucination",
+            "Deception & scheming",
+            "Agents & autonomy",
+            "Cyber & containment",
+            "Governance & insiders",
+            "Human safety & dependency",
+            "Privacy & surveillance",
+            "Deepfakes & misuse",
+            "Copyright & rights",
+            "Labor & society",
+            "Other"
+          ]
+        }
+      },
+      "sources": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "label",
+            "url",
+            "kind"
+          ],
+          "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "Primary / official",
+                "Paper",
+                "Reporting",
+                "Reference"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

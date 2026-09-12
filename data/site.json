@@ -1,0 +1,67 @@
+{
+  "name": "AI Incident Atlas",
+  "version": "1.0.0",
+  "description": "A sourced interactive research atlas of major AI incidents, evaluations, controversies, resignations, governance failures, misuse cases, and real-world agent boundary crossings.",
+  "repositoryUrl": "",
+  "canonicalUrl": "",
+  "evidenceOrder": [
+    "REAL",
+    "EVAL",
+    "EVAL → REAL",
+    "GOV",
+    "LEGAL",
+    "MISUSE",
+    "POLICY",
+    "CONTESTED"
+  ],
+  "confidenceOrder": [
+    "High",
+    "Medium",
+    "Low"
+  ],
+  "themes": [
+    "Reliability & hallucination",
+    "Deception & scheming",
+    "Agents & autonomy",
+    "Cyber & containment",
+    "Governance & insiders",
+    "Human safety & dependency",
+    "Privacy & surveillance",
+    "Deepfakes & misuse",
+    "Copyright & rights",
+    "Labor & society",
+    "Other"
+  ],
+  "categories": [
+    "Context milestone",
+    "Evaluation / red team",
+    "Governance & resignation",
+    "Human safety",
+    "Labor & society",
+    "Legal & rights",
+    "Misuse / deepfake",
+    "Model failure",
+    "Policy & warning",
+    "Privacy",
+    "Real-world agent failure",
+    "Security / cyber"
+  ],
+  "sourceKinds": [
+    "Primary / official",
+    "Paper",
+    "Reporting",
+    "Reference"
+  ],
+  "palette": {
+    "REAL": "#ff7181",
+    "EVAL": "#72b8ff",
+    "EVAL → REAL": "#c99cff",
+    "GOV": "#ffc76d",
+    "LEGAL": "#78df90",
+    "MISUSE": "#78df90",
+    "POLICY": "#ffc76d",
+    "CONTESTED": "#ff9e6a"
+  },
+  "latestCount": 4,
+  "storageNamespace": "aiIncidentAtlas:v1"
+}

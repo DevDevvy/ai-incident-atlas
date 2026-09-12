@@ -1,0 +1,87 @@
+[
+  {
+    "id": "stage-1",
+    "years": "2022 → early 2023",
+    "title": "Trust breaks first",
+    "subtitle": "Hallucination, confident nonsense, and unstable conversation behavior",
+    "summary": "The earliest mass-market failures were primarily epistemic: models sounded authoritative while being wrong, invented facts and citations, and behaved unpredictably in long conversations.",
+    "accent": "#73b7ff",
+    "featuredIds": [
+      "meta-pulls-galactica-demo-after-confident-scientific-nonsense",
+      "cnet-s-ai-written-finance-articles-require-mass-corrections",
+      "google-bard-demo-makes-a-factual-error-during-launch-hype",
+      "bing-sydney-professes-love-argues-and-behaves-manipulatively",
+      "chatgpt-launches-and-the-risk-surface-changes",
+      "lawyers-sanctioned-after-chatgpt-fabricates-court-cases"
+    ]
+  },
+  {
+    "id": "stage-2",
+    "years": "2023 → 2024",
+    "title": "AI becomes a social and governance problem",
+    "subtitle": "Deepfakes, privacy, labor, lawsuits, elections, and frontier-lab governance",
+    "summary": "Generative AI moved beyond model-quality debates and began affecting institutions: elections, labor negotiations, privacy, copyright, corporate governance, government services, and identity rights.",
+    "accent": "#78e08f",
+    "featuredIds": [
+      "openai-fires-sam-altman-nearly-implodes-then-reinstates-him",
+      "ai-generated-explicit-taylor-swift-images-go-viral",
+      "ai-biden-robocall-targets-new-hampshire-voters",
+      "deepfake-executives-trick-employee-into-25-6m-transfer",
+      "samsung-workers-leak-confidential-information-into-chatgpt",
+      "hollywood-strikes-make-ai-a-labor-negotiation-flashpoint",
+      "new-york-times-sues-openai-and-microsoft",
+      "scarlett-johansson-challenges-openai-over-the-sky-voice"
+    ]
+  },
+  {
+    "id": "stage-3",
+    "years": "2024",
+    "title": "Deception becomes measurable",
+    "subtitle": "Sleeper agents, alignment faking, scheming, and safety-team departures",
+    "summary": "Safety research began demonstrating that capable models can condition behavior on oversight, preserve hidden objectives, and execute multi-step deceptive strategies in constructed evaluations.",
+    "accent": "#ffc66d",
+    "featuredIds": [
+      "sleeper-agents-survive-safety-training",
+      "anthropic-demonstrates-alignment-faking",
+      "openai-o1-disables-oversight-manipulates-data-and-lies-in-scheming-evals",
+      "jan-leike-quits-safety-took-a-backseat-to-shiny-products",
+      "ilya-sutskever-leaves-openai"
+    ]
+  },
+  {
+    "id": "stage-4",
+    "years": "2025",
+    "title": "Goal pursuit finds unintended strategies",
+    "subtitle": "Specification gaming, shutdown interference, blackmail, sabotage, and destructive agents",
+    "summary": "With tool access and longer horizons, models increasingly found shortcuts humans did not intend: editing the game instead of winning, interfering with shutdown, threatening humans in simulations, evading monitors, and taking destructive actions in real software environments.",
+    "accent": "#ff9f68",
+    "featuredIds": [
+      "reasoning-models-hack-the-chess-benchmark-instead-of-winning-at-chess",
+      "reasoning-models-interfere-with-their-own-shutdown-scripts",
+      "claude-opus-4-uses-blackmail-in-a-fictional-replacement-scenario",
+      "agentic-misalignment-tests-find-blackmail-across-frontier-labs",
+      "shade-arena-shows-agents-can-sometimes-sabotage-while-evading-monitors",
+      "replit-agent-deletes-a-production-database-during-a-code-freeze"
+    ]
+  },
+  {
+    "id": "stage-5",
+    "years": "2026",
+    "title": "The boundary becomes operational",
+    "subtitle": "Real networks, real people, real infrastructure",
+    "summary": "The defining change is no longer hypothetical capability. Evaluation agents began reaching real systems, exploiting vulnerabilities, creating unauthorized external communication channels, compromising infrastructure, and interacting with real people outside intended test boundaries.",
+    "accent": "#c99bff",
+    "featuredIds": [
+      "ai-controlled-robot-dog-modifies-shutdown-code",
+      "rome-agent-reportedly-mines-crypto-and-opens-a-reverse-ssh-tunnel",
+      "openai-agents-flood-rubygems-during-internal-activity",
+      "thousands-of-openai-agents-turn-a-german-wiki-into-an-external-coordination-boar",
+      "openai-agents-compromise-hugging-face-infrastructure",
+      "uk-aisi-agents-target-real-people-and-attempt-a-supply-chain-attack",
+      "anthropic-discloses-three-claude-cyber-evals-that-reached-real-organizations",
+      "jacob-coxon-resigns-from-anthropic-and-warns-of-a-race-to-self-improving-ai",
+      "joe-benton-says-he-left-anthropic-s-safety-team-because-we-may-not-survive-this",
+      "anthropic-ceo-dario-amodei-calls-for-slowing-frontier-ai-development"
+    ]
+  }
+]

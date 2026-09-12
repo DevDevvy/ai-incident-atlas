@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#070a10">
+<meta name="description" content="A sourced interactive research atlas of major AI incidents, evaluations, controversies, resignations, governance failures, misuse cases, and real-world agent boundary crossings.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI Incident Atlas">
+<meta property="og:description" content="Explore how AI risk changed from hallucinations and deepfakes to deception evaluations, agentic specification gaming, and real-world boundary crossings.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="stylesheet" href="./assets/styles.css">
+<title>AI Incident Atlas</title>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to research content</a>
+<div class="loading-screen" id="loadingScreen" aria-live="polite"><div class="loader"><div class="loader-mark"></div><b>Loading AI Incident Atlas</b><span>Reading the verified incident dataset…</span></div></div>
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <div class="brand">AI Incident <em>Atlas</em></div>
+    <nav class="nav" aria-label="Atlas views">
+      <button class="active" data-view="story">Story</button><button data-view="timeline">Timeline</button><button data-view="themes">Themes</button><button data-view="research">Research</button>
+    </nav>
+    <div class="top-actions">
+      <a class="primarybtn contribute-link" id="contributeBtn" href="#">Contribute data</a>
+      <button class="softbtn" id="tourBtn">Guided tour</button>
+      <button class="iconbtn" id="savedBtn" title="Show bookmarks" aria-label="Show bookmarked incidents">★ <span id="savedCount">0</span></button>
+      <button class="iconbtn" id="aboutBtn" title="Methodology" aria-label="Open methodology">?</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="shell">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow" id="coverageEyebrow">Research atlas</div>
+        <h1>How AI risk changed shape.</h1>
+        <p class="lede" id="heroLede">A research-first map of major AI incidents and turning points—built to separate what actually happened from what headlines implied.</p>
+        <div class="hero-actions"><button class="primarybtn" id="heroTour">Start guided progression</button><button class="softbtn" data-jump="timeline">Browse all incidents</button><button class="softbtn" data-jump="research">Open research table</button></div>
+        <div class="notice"><strong>Core rule:</strong> “A model demonstrated this in a red-team scenario” is not the same claim as “an AI independently did this in production.” Evidence classes stay separate throughout the Atlas.</div>
+      </div>
+      <aside class="snapshot"><h3>Incident volume by year</h3><div class="yearbars" id="yearBars"></div></aside>
+    </div>
+    <div class="statgrid"><div class="stat"><b id="statTotal">0</b><span>documented items</span></div><div class="stat"><b id="statCross">0</b><span>eval → real crossings</span></div><div class="stat"><b id="statEval">0</b><span>controlled evaluations</span></div><div class="stat"><b id="statGov">0</b><span>governance / warnings</span></div><div class="stat"><b id="statSources">0</b><span>source links</span></div></div>
+  </div>
+</section>
+
+<div class="mobile-filterbar"><div class="shell inner"><button class="softbtn" id="mobileFilters">☰ Filters</button><button class="softbtn" data-quick="EVAL → REAL">Boundary crossings</button><button class="softbtn" data-quick="GOV">Resignations</button><button class="softbtn" data-quick="CONTESTED">Contested</button></div></div>
+<div class="filter-backdrop" id="filterBackdrop"></div>
+
+<main id="main" class="shell workspace">
+  <aside class="sidebar" id="sidebar" aria-label="Research filters">
+    <div class="searchbox"><span class="searchicon">⌕</span><input id="search" type="search" placeholder="Search people, events, tags…" aria-label="Search incidents"></div>
+    <div class="filter-section"><div class="filter-title"><span>Evidence type</span><button class="mini" data-clear="evidence">clear</button></div><div class="filter-list" id="evidenceFilters"></div></div>
+    <div class="filter-section"><div class="filter-title"><span>Theme</span><button class="mini" data-clear="themes">clear</button></div><div class="filter-list" id="themeFilters"></div></div>
+    <div class="filter-section"><div class="filter-title"><span>Confidence</span><button class="mini" data-clear="confidence">clear</button></div><div class="filter-list" id="confidenceFilters"></div></div>
+    <div class="filter-section"><div class="filter-title"><span>Source quality</span></div><label class="checkrow"><input type="checkbox" id="primaryOnly"> Has a primary / official source</label><p class="filter-note">Source type is a navigation aid, not a universal credibility score.</p></div>
+    <div class="filter-section"><div class="filter-title"><span>Years</span></div><div class="range-row"><select id="yearFrom" aria-label="From year"></select><select id="yearTo" aria-label="To year"></select></div></div>
+    <div class="filter-section"><div class="filter-title"><span>Minimum impact</span></div><select id="impactMin" style="width:100%;background:#0d1520;color:#c8d4e4;border:1px solid #2a3a52;border-radius:9px;padding:8px"><option value="1">Any impact</option><option value="2">2+</option><option value="3">3+</option><option value="4">4+</option><option value="5">5 only</option></select></div>
+    <div class="filter-section"><label class="checkrow"><input type="checkbox" id="savedOnly"> Bookmarked only</label></div>
+    <div class="sidebar-actions"><button class="softbtn" id="resetFilters">Reset</button><button class="softbtn" id="exportBtn">Export</button></div>
+  </aside>
+
+  <section class="content">
+    <div id="fatalError" class="fatal hidden" role="alert"></div>
+    <section id="storyView" class="view active">
+      <div class="story-intro section-card"><div><div class="story-kicker">The progression</div><h2>The important story is not one “rogue AI” headline.</h2><p>The evidence changes category over time. Early failures are mostly about unreliable outputs. Then AI becomes a governance, labor, privacy, rights, and influence problem. Deception becomes measurable in adversarial evaluations. Goal-directed agents discover unintended strategies. Eventually, some evaluation boundaries are crossed into real networks, infrastructure, and people.</p></div><div class="signal"><b>How to read this atlas</b><p>Use <strong>Story</strong> for the arc, <strong>Timeline</strong> for chronology, <strong>Themes</strong> to trace a risk across years, and <strong>Research</strong> for sortable data and source inspection.</p></div></div>
+      <section class="latest-wrap"><div class="latest-head"><div><h3>Latest documented events</h3><p>Newest records in the current research snapshot.</p></div><button class="mini" data-jump="timeline">See full timeline →</button></div><div class="latest-grid" id="latestEvents"></div></section>
+      <div id="stages" class="stages"></div>
+    </section>
+
+    <section id="timelineView" class="view"><div class="viewhead"><div><h2>Chronological timeline</h2><p>Every item in the dataset, with evidence type, caveat, sources, tags, and related incidents.</p></div><div class="count" id="timelineCount"></div></div><div id="timeline" class="timeline"></div></section>
+
+    <section id="themesView" class="view"><div class="viewhead"><div><h2>Theme lanes</h2><p>Follow the same problem across years instead of reading strictly by date.</p></div><div class="count" id="themesCount"></div></div><div id="themesGrid" class="themes-grid"></div></section>
+
+    <section id="researchView" class="view">
+      <div class="viewhead"><div><h2>Research table</h2><p>Sortable, filterable source data. Export exactly what is currently visible.</p></div><div class="count" id="researchCount"></div></div>
+      <div class="research-health" id="researchHealth"></div>
+      <div class="research-toolbar"><button class="softbtn" id="csvBtn">Export visible CSV</button><button class="softbtn" id="jsonBtn">Export visible JSON</button><button class="softbtn" id="notesBtn">Export bookmarks + notes</button><a class="softbtn" href="./data/incidents.json" target="_blank" rel="noopener noreferrer" style="text-decoration:none">Raw dataset ↗</a><button class="softbtn" id="printBtn">Print</button></div>
+      <div class="table-wrap"><table><thead><tr><th data-sort="date">Date</th><th data-sort="title">Incident</th><th data-sort="evidence">Evidence</th><th data-sort="category">Category</th><th data-sort="org">Organization</th><th data-sort="impact">Impact</th><th data-sort="confidence">Confidence</th><th>Themes</th><th>Sources</th></tr></thead><tbody id="researchBody"></tbody></table></div>
+    </section>
+
+    <section id="methodView" class="view"><div class="viewhead"><div><h2>Methodology & interpretation</h2><p>What the labels mean, what this dataset can support, and where caution is required.</p></div></div><div class="methodology">
+      <div class="method-card"><h3>REAL</h3><p>An incident affected actual users, organizations, infrastructure, products, or public systems. “Real” does not mean the AI acted autonomously; many are ordinary product failures.</p></div>
+      <div class="method-card"><h3>EVAL</h3><p>A controlled evaluation, simulation, red-team test, benchmark, or deliberately adversarial lab setup. It demonstrates capability under those conditions, not normal deployment frequency.</p></div>
+      <div class="method-card"><h3>EVAL → REAL</h3><p>An evaluation or research system crossed intended boundaries and touched real external infrastructure or people.</p></div>
+      <div class="method-card"><h3>MISUSE</h3><p>Humans intentionally used AI for fraud, deepfakes, cybercrime, influence, or other harmful ends. Operator-directed misuse is kept separate from autonomous misalignment.</p></div>
+      <div class="method-card"><h3>GOV / POLICY</h3><p>Resignations, board crises, whistleblower complaints, executive warnings, and governance proposals are evidence about institutional concern—not direct proof of technical catastrophe.</p></div>
+      <div class="method-card"><h3>CONTESTED</h3><p>A material public claim is disputed. Official findings and alternative allegations are presented separately rather than collapsed into one conclusion.</p></div>
+      <div class="method-card"><h3>Source labels</h3><p>Primary / official, Paper, Reporting, and Reference labels help users inspect provenance. They are not automatic truth scores.</p></div>
+      <div class="method-card"><h3>Impact score</h3><p>The 1–5 impact field reflects historical importance to this research narrative, not probability of existential harm or a formal severity score.</p></div>
+    </div></section>
+  </section>
+</main>
+
+<section class="contribute-section"><div class="section-card contribute-grid"><div><div class="story-kicker">Community research</div><h2 style="font-size:30px;letter-spacing:-.04em;margin:8px 0 9px">Know about an incident we should add or correct?</h2><p style="color:#aebcd0;line-height:1.65;margin:0">Submit it through a structured GitHub form. Proposed data is independently verified before it enters the canonical dataset.</p></div><div class="contribute-actions"><a id="newIncidentLink" class="primarybtn" href="#">Submit a new incident ↗</a><a id="updateIncidentLink" class="softbtn" href="#">Correct / update an incident ↗</a><a id="githubRepoLink" class="softbtn" href="#">View the GitHub repository ↗</a></div></div></section>
+
+<footer class="footer"><div class="footer-inner"><div><strong style="color:#94a7be">AI Incident Atlas</strong><br><span id="footerSnapshot">Research dataset</span>. Bookmarks and personal notes stay in your browser.</div><div class="footer-links"><a href="./data/incidents.json">Dataset</a><a id="footerRepo" href="#">GitHub</a><a href="./docs/METHODOLOGY.md">Methodology source</a></div></div></footer>
+
+<nav class="mobile-nav" aria-label="Mobile views"><button class="active" data-view="story"><b>◫</b>Story</button><button data-view="timeline"><b>│</b>Timeline</button><button data-view="themes"><b>⌘</b>Themes</button><button data-view="research"><b>▦</b>Research</button></nav>
+
+<dialog id="detailDialog"><div class="modal-head"><div id="modalMeta" class="meta"></div><h2 id="modalTitle"></h2><button class="close" aria-label="Close incident details">×</button></div><div id="modalBody" class="modal-body"></div></dialog>
+<div class="tour" id="tour" role="dialog" aria-modal="true" aria-labelledby="tourTitle"><div class="tourcard"><div class="tourstep" id="tourStep"></div><h2 id="tourTitle"></h2><div class="tourmeta" id="tourMeta"></div><p id="tourSummary"></p><div class="signal" style="margin-top:13px"><b>Why this changes the story</b><p id="tourWhy"></p></div><div class="tourcontrols"><button class="softbtn" id="tourExit">Exit</button><div><button class="softbtn" id="tourPrev">← Back</button><button class="primarybtn" id="tourNext">Next →</button></div></div></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<noscript><div class="fatal"><h2>JavaScript is required</h2><p>The Atlas is an interactive static application. Enable JavaScript to load the incident dataset.</p></div></noscript>
+<script type="module" src="./assets/app.js"></script>
+</body>
+</html>
