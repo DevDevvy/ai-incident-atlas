@@ -20,6 +20,11 @@
     "description": "Verified issue has been promoted to a dataset pull request"
   },
   {
+    "name": "published",
+    "color": "0E8A16",
+    "description": "Verified incident was merged into the canonical dataset"
+  },
+  {
     "name": "promotion-failed",
     "color": "B60205",
     "description": "Automatic verified-issue promotion failed and needs maintainer attention"

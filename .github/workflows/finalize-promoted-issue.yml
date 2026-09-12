@@ -1,0 +1,53 @@
+name: Finalize promoted incident
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: read
+
+jobs:
+  finalize:
+    if: >-
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.user.login == 'github-actions[bot]' &&
+      startsWith(github.event.pull_request.head.ref, 'automation/issue-')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Resolve source issue and finalize it
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: |
+          set -euo pipefail
+
+          issue_number=$(printf '%s\n' "$PR_BODY" | sed -n 's/.*<!-- atlas-source-issue: \([0-9][0-9]*\) -->.*/\1/p' | head -n1)
+          if [ -z "$issue_number" ]; then
+            echo "No atlas source issue marker found; nothing to finalize."
+            exit 0
+          fi
+
+          labels=$(gh issue view "$issue_number" --repo "$GITHUB_REPOSITORY" --json labels --jq '.labels[].name')
+          printf '%s\n' "$labels" | grep -Fxq 'data-submission'
+          printf '%s\n' "$labels" | grep -Fxq 'verified'
+          printf '%s\n' "$labels" | grep -Fxq 'pr-created'
+
+          gh issue edit "$issue_number" --repo "$GITHUB_REPOSITORY" \
+            --remove-label "pr-created" \
+            --add-label "published"
+          gh issue edit "$issue_number" --repo "$GITHUB_REPOSITORY" --remove-label "promotion-failed" || true
+
+          comment_file="$RUNNER_TEMP/published.md"
+          cat > "$comment_file" <<EOF
+          ✅ Published in the canonical Atlas dataset via PR #${PR_NUMBER}: ${PR_URL}
+
+          The source issue is now closed because the reviewed dataset change was merged to `main`.
+          EOF
+          gh issue comment "$issue_number" --repo "$GITHUB_REPOSITORY" --body-file "$comment_file"
+          gh issue close "$issue_number" --repo "$GITHUB_REPOSITORY" --reason completed
