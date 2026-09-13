@@ -1,11 +1,26 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseIssueSections } from './lib/issue-promotion.mjs';
+import { normalizeSourceKind, parseIssueSections } from './lib/issue-promotion.mjs';
 
 const root=process.cwd();
 const readJson=p=>JSON.parse(fs.readFileSync(path.join(root,p),'utf8'));
 const writeJson=(p,v)=>fs.writeFileSync(path.join(root,p),`${JSON.stringify(v,null,2)}\n`);
 const allowedFields=new Set(['date','dateLabel','title','org','category','evidence','impact','confidence','summary','why','caveat','tags','sources','themes']);
+const normalizePatchedSource=source=>{
+  if(!source||typeof source!=='object')return source;
+  if(!Object.hasOwn(source,'kind'))throw new Error('Updated sources must include kind for every source.');
+  return {...source,kind:normalizeSourceKind(source.kind)};
+};
+const normalizePatchChanges=changes=>{
+  if(!changes||typeof changes!=='object'||Array.isArray(changes))throw new Error('Invalid incident patch.');
+  if(Object.hasOwn(changes,'sources')&&(changes.sources===null||!Array.isArray(changes.sources)))throw new Error('Updated sources must be an array.');
+  return Object.hasOwn(changes,'sources')
+    ? {
+        ...changes,
+        sources: changes.sources.map(normalizePatchedSource)
+      }
+    : changes;
+};
 
 const eventPath=process.env.GITHUB_EVENT_PATH;
 if(!eventPath)throw new Error('GITHUB_EVENT_PATH is required.');
@@ -30,8 +45,9 @@ const incidents=readJson('data/incidents.json');
 const index=incidents.findIndex(x=>x.id===incidentId);
 if(index<0)throw new Error(`Unknown incident id: ${incidentId}`);
 const current=incidents[index];
-const updated={...current,...patch.changes,id:current.id};
-if(Object.hasOwn(patch.changes,'title')&&incidents.some(x=>x.id!==incidentId&&x.title.trim().toLowerCase()===String(updated.title).trim().toLowerCase()))throw new Error('Updated title duplicates another incident.');
+const changes=normalizePatchChanges(patch.changes);
+const updated={...current,...changes,id:current.id};
+if(Object.hasOwn(changes,'title')&&incidents.some(x=>x.id!==incidentId&&x.title.trim().toLowerCase()===String(updated.title).trim().toLowerCase()))throw new Error('Updated title duplicates another incident.');
 
 let next=[...incidents];
 next[index]=updated;

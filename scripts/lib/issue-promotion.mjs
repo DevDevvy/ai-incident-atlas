@@ -12,6 +12,15 @@ const REPORTING_HOSTS = [
   'japantimes.co.jp'
 ];
 
+const SOURCE_KIND_ALIASES = new Map([
+  ['primary', 'Primary / official'],
+  ['official', 'Primary / official'],
+  ['primary / official', 'Primary / official'],
+  ['paper', 'Paper'],
+  ['reporting', 'Reporting'],
+  ['reference', 'Reference']
+]);
+
 function normalizeEmpty(value = '') {
   const v = String(value).trim();
   return /^_?No response_?$/i.test(v) ? '' : v;
@@ -80,6 +89,13 @@ export function inferSourceKind(line, url) {
   if (/\b(primary|official)\b/i.test(line) || hostMatches(host, PRIMARY_HOSTS)) return 'Primary / official';
   if (/\b(reuters|associated press|\bap\b|reporting|guardian|wired|ars technica|bloomberg|axios|bbc|washington post|new york times)\b/i.test(line) || hostMatches(host, REPORTING_HOSTS)) return 'Reporting';
   return 'Reference';
+}
+
+export function normalizeSourceKind(value) {
+  const trimmed = String(value || '').trim();
+  const normalized = SOURCE_KIND_ALIASES.get(trimmed.toLowerCase());
+  if (!normalized) throw new Error(`Invalid source kind: ${trimmed}`);
+  return normalized;
 }
 
 export function parseSources(value) {
