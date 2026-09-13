@@ -1,11 +1,21 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseIssueSections } from './lib/issue-promotion.mjs';
+import { normalizeSourceKind, parseIssueSections } from './lib/issue-promotion.mjs';
 
 const root=process.cwd();
 const readJson=p=>JSON.parse(fs.readFileSync(path.join(root,p),'utf8'));
 const writeJson=(p,v)=>fs.writeFileSync(path.join(root,p),`${JSON.stringify(v,null,2)}\n`);
 const allowedFields=new Set(['date','dateLabel','title','org','category','evidence','impact','confidence','summary','why','caveat','tags','sources','themes']);
+const normalizePatchChanges=changes=>Object.hasOwn(changes,'sources')
+  ? {
+      ...changes,
+      sources: Array.isArray(changes.sources)
+        ? changes.sources.map(source=>source&&typeof source==='object'
+          ? {...source,kind:normalizeSourceKind(source.kind)}
+          : source)
+        : changes.sources
+    }
+  : changes;
 
 const eventPath=process.env.GITHUB_EVENT_PATH;
 if(!eventPath)throw new Error('GITHUB_EVENT_PATH is required.');
@@ -30,7 +40,8 @@ const incidents=readJson('data/incidents.json');
 const index=incidents.findIndex(x=>x.id===incidentId);
 if(index<0)throw new Error(`Unknown incident id: ${incidentId}`);
 const current=incidents[index];
-const updated={...current,...patch.changes,id:current.id};
+const changes=normalizePatchChanges(patch.changes);
+const updated={...current,...changes,id:current.id};
 if(Object.hasOwn(patch.changes,'title')&&incidents.some(x=>x.id!==incidentId&&x.title.trim().toLowerCase()===String(updated.title).trim().toLowerCase()))throw new Error('Updated title duplicates another incident.');
 
 let next=[...incidents];

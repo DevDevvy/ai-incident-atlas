@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { insertIncident, issueToIncident, parseIssueSections, parseSources } from './lib/issue-promotion.mjs';
+import { insertIncident, issueToIncident, normalizeSourceKind, parseIssueSections, parseSources } from './lib/issue-promotion.mjs';
 
 const config = {
   evidenceOrder: ['REAL','EVAL','EVAL → REAL','GOV','LEGAL','MISUSE','POLICY','CONTESTED'],
@@ -95,6 +95,10 @@ assert.deepEqual(record.tags, ['Apple Intelligence','hallucination','news integr
 assert.deepEqual(record.themes, ['Reliability & hallucination']);
 assert.equal(record.sources[0].kind, 'Reporting');
 assert.equal(record.sources[1].kind, 'Primary / official');
+assert.equal(normalizeSourceKind('Primary'), 'Primary / official');
+assert.equal(normalizeSourceKind('official'), 'Primary / official');
+assert.equal(normalizeSourceKind('Reporting'), 'Reporting');
+assert.equal(normalizeSourceKind('Paper'), 'Paper');
 
 assert.throws(
   () => issueToIncident({...issue, labels:[{name:'data-submission'}]}, config, []),
