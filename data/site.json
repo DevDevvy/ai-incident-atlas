@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A sourced interactive research atlas of major AI incidents, evaluations, controversies, resignations, governance failures, misuse cases, and real-world agent boundary crossings.",
   "repositoryUrl": "",
-  "canonicalUrl": "",
+  "canonicalUrl": "https://devdevvy.github.io/ai-incident-atlas/",
   "evidenceOrder": [
     "REAL",
     "EVAL",

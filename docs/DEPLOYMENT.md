@@ -16,6 +16,12 @@ A project repository normally appears at:
 
 `https://YOUR-USERNAME.github.io/REPOSITORY-NAME/`
 
+For this repository, `data/site.json` and the social metadata in `index.html` use the production URL:
+
+`https://devdevvy.github.io/ai-incident-atlas/`
+
+The 1200×630 share image lives at `assets/social-card-v2.jpg`. Because the build copies the entire `assets/` directory, the image is included in the Pages artifact automatically. The build also fails if the image or the required absolute Open Graph and Twitter metadata are missing.
+
 ## Optional one-command GitHub CLI setup
 
 If `gh` is authenticated with repository administration/Pages permissions, run:
@@ -28,9 +34,18 @@ The helper discovers the current repository and configures GitHub Pages with `bu
 
 ## Custom domain
 
-Set the exact repository URL in `data/site.json` if you move to a custom domain, because GitHub Pages hostname inference will no longer identify the repository automatically.
+Set the new canonical URL in `data/site.json` and update the absolute canonical, `og:url`, `og:image`, `twitter:url`, and `twitter:image` values in `index.html` if you move to a custom domain.
 
 Then configure the custom domain under **Settings → Pages**. If you add a root `CNAME` file, the build script will carry it into `dist/`.
+
+## Share preview caching
+
+Messaging apps and social networks cache link previews independently from GitHub Pages. A successful deployment does not guarantee that an already-shared URL will refresh immediately.
+
+- Use a new image filename whenever the artwork changes; the current `social-card-v2.jpg` path prevents clients from reusing the earlier 600×315 image.
+- Re-scrape the page with the platform's sharing debugger or post inspector when one is available.
+- For clients without a refresh tool, send the link once with a harmless query string such as `?preview=2` to encourage a fresh fetch. The canonical metadata still points to the clean production URL.
+- Expect existing messages to keep their original preview; validation should use a newly composed message after the deploy is live.
 
 ## Branch protection recommendation
 
