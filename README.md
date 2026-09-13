@@ -40,7 +40,8 @@ Technical contributors can still edit `data/incidents.json` directly in a normal
 ├── assets/
 │   ├── app.js                    # Interactive Atlas application
 │   ├── styles.css                # Responsive UI
-│   └── favicon.svg
+│   ├── favicon.svg
+│   └── social-card-v2.jpg        # 1200×630 social sharing preview
 ├── data/
 │   ├── incidents.json            # CANONICAL INCIDENT DATA
 │   ├── incidents.schema.json     # JSON Schema for contributors/tools
