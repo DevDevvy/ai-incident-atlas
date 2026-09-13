@@ -1,0 +1,134 @@
+name: Promote verified incident update
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  statuses: write
+
+concurrency:
+  group: promote-update-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    if: >-
+      github.event.label.name == 'verified' &&
+      contains(github.event.issue.labels.*.name, 'correction') &&
+      !contains(github.event.issue.labels.*.name, 'pr-created') &&
+      !contains(github.event.issue.labels.*.name, 'published')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+
+      - name: Apply verified issue patch
+        run: node scripts/promote-verified-update.mjs
+
+      - name: Run full project validation
+        run: npm run check
+
+      - name: Create update branch and commit
+        id: branch
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          branch="automation/update-issue-${ISSUE_NUMBER}-${RUN_ID}"
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add data/incidents.json
+          if git diff --cached --quiet; then
+            echo "No dataset change was generated." >&2
+            exit 1
+          fi
+          git commit -m "Apply verified incident update from issue #${ISSUE_NUMBER}"
+          sha=$(git rev-parse HEAD)
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          git push origin "$branch"
+
+      - name: Publish update validation status
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ steps.branch.outputs.sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh api --method POST "repos/$GITHUB_REPOSITORY/statuses/$SHA" \
+            -f state=success \
+            -f context='atlas/update-validation' \
+            -f description='Verified correction passed npm run check' \
+            -f target_url="$RUN_URL"
+
+      - name: Open pull request
+        id: pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          BRANCH: ${{ steps.branch.outputs.branch }}
+        run: |
+          set -euo pipefail
+          body_file="$RUNNER_TEMP/pr-body.md"
+          cat > "$body_file" <<EOF
+          Generated automatically from verified correction issue #${ISSUE_NUMBER}.
+
+          <!-- atlas-source-issue: ${ISSUE_NUMBER} -->
+          <!-- atlas-promotion-type: correction -->
+
+          Closes #${ISSUE_NUMBER}
+
+          The proposed patch passed the full project check before this PR was opened. Review the dataset diff and the `atlas/update-validation` status before merging.
+          EOF
+          pr_url=$(gh pr create \
+            --repo "$GITHUB_REPOSITORY" \
+            --base main \
+            --head "$BRANCH" \
+            --title "Apply verified incident update from issue #${ISSUE_NUMBER}" \
+            --body-file "$body_file")
+          echo "url=$pr_url" >> "$GITHUB_OUTPUT"
+
+      - name: Update source issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          PR_URL: ${{ steps.pr.outputs.url }}
+        run: |
+          set -euo pipefail
+          gh issue edit "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" \
+            --remove-label "needs-verification" \
+            --add-label "pr-created"
+          gh issue edit "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" --remove-label "promotion-failed" || true
+          comment_file="$RUNNER_TEMP/issue-comment.md"
+          cat > "$comment_file" <<EOF
+          ✅ Verified correction promoted automatically to a dataset pull request: ${PR_URL}
+
+          The updated dataset passed the full project check before the PR was opened. The correction is not live until the PR is reviewed and merged.
+          EOF
+          gh issue comment "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" --body-file "$comment_file"
+
+      - name: Report promotion failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh issue edit "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" --add-label "promotion-failed" || true
+          gh issue comment "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" \
+            --body "❌ Automatic correction promotion failed. No change was merged. Review: ${RUN_URL}" || true
