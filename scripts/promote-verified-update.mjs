@@ -13,12 +13,11 @@ const normalizePatchedSource=source=>{
 };
 const normalizePatchChanges=changes=>{
   if(!changes||typeof changes!=='object'||Array.isArray(changes))throw new Error('Invalid incident patch.');
+  if(Object.hasOwn(changes,'sources')&&!Array.isArray(changes.sources))throw new Error('Updated sources must be an array.');
   return Object.hasOwn(changes,'sources')
     ? {
         ...changes,
-        sources: Array.isArray(changes.sources)
-          ? changes.sources.map(normalizePatchedSource)
-          : changes.sources
+        sources: changes.sources.map(normalizePatchedSource)
       }
     : changes;
 };
