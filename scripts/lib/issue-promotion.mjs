@@ -93,7 +93,9 @@ export function inferSourceKind(line, url) {
 
 export function normalizeSourceKind(value) {
   const trimmed = String(value || '').trim();
-  return SOURCE_KIND_ALIASES.get(trimmed.toLowerCase()) || trimmed;
+  const normalized = SOURCE_KIND_ALIASES.get(trimmed.toLowerCase());
+  if (!normalized) throw new Error(`Invalid source kind: ${trimmed}`);
+  return normalized;
 }
 
 export function parseSources(value) {
