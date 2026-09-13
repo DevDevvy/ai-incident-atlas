@@ -14,7 +14,8 @@ jobs:
     if: >-
       github.event.pull_request.merged == true &&
       github.event.pull_request.user.login == 'github-actions[bot]' &&
-      startsWith(github.event.pull_request.head.ref, 'automation/issue-')
+      (startsWith(github.event.pull_request.head.ref, 'automation/issue-') ||
+       startsWith(github.event.pull_request.head.ref, 'automation/update-issue-'))
     runs-on: ubuntu-latest
 
     steps:
@@ -34,9 +35,12 @@ jobs:
           fi
 
           labels=$(gh issue view "$issue_number" --repo "$GITHUB_REPOSITORY" --json labels --jq '.labels[].name')
-          printf '%s\n' "$labels" | grep -Fxq 'data-submission'
           printf '%s\n' "$labels" | grep -Fxq 'verified'
           printf '%s\n' "$labels" | grep -Fxq 'pr-created'
+          if ! printf '%s\n' "$labels" | grep -Eq '^(data-submission|correction)$'; then
+            echo "Source issue is neither a data submission nor correction."
+            exit 1
+          fi
 
           gh issue edit "$issue_number" --repo "$GITHUB_REPOSITORY" \
             --remove-label "pr-created" \
