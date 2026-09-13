@@ -2191,6 +2191,51 @@
     ]
   },
   {
+    "date": "2026-08-31",
+    "dateLabel": "Aug 31, 2026",
+    "title": "Hundreds of AI agents help attacker compromise 395 organizations through PaperCut flaws",
+    "org": "GreyNoise / PaperCut / Codex harness / DeepSeek",
+    "category": "Security / cyber",
+    "evidence": "MISUSE",
+    "impact": 5,
+    "confidence": "High",
+    "summary": "A likely Russian-speaking threat actor used hundreds of AI agents built around OpenAI’s Codex harness, a DeepSeek model, and publicly available offensive-security tools to develop and deploy exploits for two PaperCut NG/MF vulnerabilities. GreyNoise observed at least 440 compromised instances belonging to 395 identified organizations across 48 countries. The campaign harvested credentials from 280 victims, obtained OS or domain secrets from 147, and reached domain-admin privileges at 12 organizations.",
+    "why": "The campaign demonstrated how agentic AI can drastically reduce the human labor required to research vulnerabilities, build and debug exploits, identify targets, retry failures, and conduct exploitation concurrently at global scale. Once operational, the campaign compromised 11 organizations in 26 seconds, showing that AI-enabled cyber operations can operate at speeds difficult for human defenders to match manually.",
+    "caveat": "This was deliberate human-directed cybercrime, not an AI independently deciding to attack organizations. A human operator configured the campaign and supplied its objective, tooling, and targeting infrastructure. Although some agents attacked organizations inside the operator’s exclusion list, GreyNoise says the reason for that deviation is unknown and it should not be interpreted as evidence of independent malicious intent.",
+    "tags": [
+      "PaperCut",
+      "AI agents",
+      "agentic cyberattack",
+      "vulnerability exploitation",
+      "remote code execution",
+      "credential theft",
+      "mass exploitation",
+      "cybercrime"
+    ],
+    "sources": [
+      {
+        "label": "Primary",
+        "url": "https://www.greynoise.io/blog/ai-orchestrated-campaign-against-papercut-ng-mf",
+        "kind": "Primary / official"
+      },
+      {
+        "label": "BleepingComputer",
+        "url": "https://www.bleepingcomputer.com/news/security/ai-powered-attack-exploited-papercut-flaws-to-hack-395-organizations",
+        "kind": "Reporting"
+      },
+      {
+        "label": "The Register",
+        "url": "https://www.theregister.com/security/2026/09/10/hundreds-of-ai-agents-helped-papercut-attacker-hit-395-orgs-and-some-went-off-script/5295650",
+        "kind": "Reporting"
+      }
+    ],
+    "id": "hundreds-of-ai-agents-help-attacker-compromise-395-organizations-through-papercut-flaws",
+    "themes": [
+      "Cyber & containment",
+      "Agents & autonomy"
+    ]
+  },
+  {
     "date": "2026-09-04",
     "dateLabel": "Sep 4–5, 2026",
     "title": "German wiki ‘swarm’ becomes public; OpenAI acknowledges agent spam",
