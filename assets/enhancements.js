@@ -147,8 +147,8 @@ function setupScrollReveal(){
 }
 
 function setupFilterSidebar(){
-  const workspace=document.querySelector(".workspace"),sidebar=document.querySelector("#sidebar");
-  if(!workspace||!sidebar)return;
+  const workspace=document.querySelector(".workspace"),sidebar=document.querySelector("#sidebar"),content=workspace?.querySelector(".content");
+  if(!workspace||!sidebar||!content)return;
 
   const header=document.createElement("div");
   header.className="filter-sidebar-head";
@@ -156,9 +156,12 @@ function setupFilterSidebar(){
   sidebar.prepend(header);
 
   const reopen=document.createElement("button");
-  reopen.type="button";reopen.className="softbtn filter-reopen";reopen.innerHTML='<span aria-hidden="true">☰</span><span>Filters</span>';
+  reopen.type="button";
+  reopen.className="softbtn filter-reopen";
+  reopen.innerHTML='<span aria-hidden="true">☰</span><span>Filters</span>';
   reopen.setAttribute("aria-label","Show research filters");
-  workspace.appendChild(reopen);
+  Object.assign(reopen.style,{position:"fixed",left:"14px",top:"82px",zIndex:"48",display:"none",alignItems:"center",gap:"7px",boxShadow:"0 10px 34px rgba(0,0,0,.28)"});
+  document.body.appendChild(reopen);
 
   const storageKey="aiIncidentAtlas:filtersCollapsed";
   const setCollapsed=(collapsed,persist=true)=>{
@@ -167,13 +170,39 @@ function setupFilterSidebar(){
     sidebar.setAttribute("aria-hidden",collapsed?"true":"false");
     header.querySelector(".filter-collapse").setAttribute("aria-expanded",collapsed?"false":"true");
     reopen.setAttribute("aria-expanded",collapsed?"false":"true");
+
+    if(collapsed){
+      workspace.style.gridTemplateColumns="minmax(0,1fr)";
+      workspace.style.gap="0";
+      content.style.gridColumn="1 / -1";
+      reopen.style.display="inline-flex";
+    }else{
+      workspace.style.gridTemplateColumns="";
+      workspace.style.gap="";
+      content.style.gridColumn="";
+      reopen.style.display="none";
+    }
+
     if(persist)try{localStorage.setItem(storageKey,collapsed?"1":"0");}catch{}
   };
+
   let initial=false;try{initial=localStorage.getItem(storageKey)==="1";}catch{}
   setCollapsed(initial,false);
   header.querySelector(".filter-collapse").addEventListener("click",()=>setCollapsed(true));
   reopen.addEventListener("click",()=>setCollapsed(false));
-  addEventListener("resize",()=>{if(innerWidth<=800)workspace.classList.remove("filters-collapsed");else setCollapsed((()=>{try{return localStorage.getItem(storageKey)==="1";}catch{return false;}})(),false);});
+  addEventListener("resize",()=>{
+    if(innerWidth<=800){
+      workspace.classList.remove("filters-collapsed");
+      workspace.style.gridTemplateColumns="";
+      workspace.style.gap="";
+      content.style.gridColumn="";
+      reopen.style.display="none";
+      sidebar.removeAttribute("aria-hidden");
+    }else{
+      let collapsed=false;try{collapsed=localStorage.getItem(storageKey)==="1";}catch{}
+      setCollapsed(collapsed,false);
+    }
+  });
 
   const sections=[...sidebar.querySelectorAll(".filter-section")];
   sections.forEach((section,index)=>{
