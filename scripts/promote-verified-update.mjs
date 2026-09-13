@@ -11,14 +11,17 @@ const normalizePatchedSource=source=>{
   if(!Object.hasOwn(source,'kind'))throw new Error('Updated sources must include kind for every source.');
   return {...source,kind:normalizeSourceKind(source.kind)};
 };
-const normalizePatchChanges=changes=>Object.hasOwn(changes,'sources')
-  ? {
-      ...changes,
-      sources: Array.isArray(changes.sources)
-        ? changes.sources.map(normalizePatchedSource)
-        : changes.sources
-    }
-  : changes;
+const normalizePatchChanges=changes=>{
+  if(!changes||typeof changes!=='object'||Array.isArray(changes))throw new Error('Invalid incident patch.');
+  return Object.hasOwn(changes,'sources')
+    ? {
+        ...changes,
+        sources: Array.isArray(changes.sources)
+          ? changes.sources.map(normalizePatchedSource)
+          : changes.sources
+      }
+    : changes;
+};
 
 const eventPath=process.env.GITHUB_EVENT_PATH;
 if(!eventPath)throw new Error('GITHUB_EVENT_PATH is required.');
