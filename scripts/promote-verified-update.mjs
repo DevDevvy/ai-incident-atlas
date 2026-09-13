@@ -42,7 +42,7 @@ if(index<0)throw new Error(`Unknown incident id: ${incidentId}`);
 const current=incidents[index];
 const changes=normalizePatchChanges(patch.changes);
 const updated={...current,...changes,id:current.id};
-if(Object.hasOwn(patch.changes,'title')&&incidents.some(x=>x.id!==incidentId&&x.title.trim().toLowerCase()===String(updated.title).trim().toLowerCase()))throw new Error('Updated title duplicates another incident.');
+if(Object.hasOwn(changes,'title')&&incidents.some(x=>x.id!==incidentId&&x.title.trim().toLowerCase()===String(updated.title).trim().toLowerCase()))throw new Error('Updated title duplicates another incident.');
 
 let next=[...incidents];
 next[index]=updated;
