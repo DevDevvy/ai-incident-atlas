@@ -66,6 +66,7 @@ function renderOverview(events,config){
     return `<span class="overview-year" style="left:${Math.max(26,Math.min(width-26,x))}px">${year}</span>`;
   }).join("");
 
+  document.querySelector(".overview-stems")?.remove();
   const stems=[];
   overview.innerHTML=layout.map(({event,x,y},index)=>{
     const dot=palette[event.evidence]||"#8fa9ff",major=event.impact>=5;
@@ -145,6 +146,50 @@ function setupScrollReveal(){
   const mutations=new MutationObserver(records=>records.forEach(record=>record.addedNodes.forEach(node=>{if(node instanceof Element)register(node);})));mutations.observe(document.body,{childList:true,subtree:true});
 }
 
+function setupFilterSidebar(){
+  const workspace=document.querySelector(".workspace"),sidebar=document.querySelector("#sidebar");
+  if(!workspace||!sidebar)return;
+
+  const header=document.createElement("div");
+  header.className="filter-sidebar-head";
+  header.innerHTML='<div><strong>Research filters</strong><span>Refine what is shown</span></div><button type="button" class="mini filter-collapse" aria-label="Collapse filters" title="Collapse filters">←</button>';
+  sidebar.prepend(header);
+
+  const reopen=document.createElement("button");
+  reopen.type="button";reopen.className="softbtn filter-reopen";reopen.innerHTML='<span aria-hidden="true">☰</span><span>Filters</span>';
+  reopen.setAttribute("aria-label","Show research filters");
+  workspace.appendChild(reopen);
+
+  const storageKey="aiIncidentAtlas:filtersCollapsed";
+  const setCollapsed=(collapsed,persist=true)=>{
+    if(innerWidth<=800)collapsed=false;
+    workspace.classList.toggle("filters-collapsed",collapsed);
+    sidebar.setAttribute("aria-hidden",collapsed?"true":"false");
+    header.querySelector(".filter-collapse").setAttribute("aria-expanded",collapsed?"false":"true");
+    reopen.setAttribute("aria-expanded",collapsed?"false":"true");
+    if(persist)try{localStorage.setItem(storageKey,collapsed?"1":"0");}catch{}
+  };
+  let initial=false;try{initial=localStorage.getItem(storageKey)==="1";}catch{}
+  setCollapsed(initial,false);
+  header.querySelector(".filter-collapse").addEventListener("click",()=>setCollapsed(true));
+  reopen.addEventListener("click",()=>setCollapsed(false));
+  addEventListener("resize",()=>{if(innerWidth<=800)workspace.classList.remove("filters-collapsed");else setCollapsed((()=>{try{return localStorage.getItem(storageKey)==="1";}catch{return false;}})(),false);});
+
+  const sections=[...sidebar.querySelectorAll(".filter-section")];
+  sections.forEach((section,index)=>{
+    const title=section.querySelector(".filter-title");if(!title)return;
+    title.classList.add("filter-title-collapsible");
+    title.setAttribute("role","button");title.setAttribute("tabindex","0");title.setAttribute("aria-expanded","true");
+    const toggle=()=>{
+      const collapsed=section.classList.toggle("filter-section-collapsed");
+      title.setAttribute("aria-expanded",collapsed?"false":"true");
+    };
+    title.addEventListener("click",event=>{if(event.target.closest("button,[data-clear]"))return;toggle();});
+    title.addEventListener("keydown",event=>{if((event.key==="Enter"||event.key===" ")&&!event.target.closest("button")){event.preventDefault();toggle();}});
+    if(index===2||index===3)section.classList.add("filter-section-default-compact");
+  });
+}
+
 function setupInteractionPolish(){
   const topbar=document.querySelector(".topbar");
   const syncTopbar=()=>topbar?.classList.toggle("is-scrolled",scrollY>10);
@@ -156,7 +201,7 @@ function setupInteractionPolish(){
 
 async function renderEnhancements(){
   const overview=document.querySelector("#overviewTimeline");if(!overview)return;
-  setupInteractionPolish();setupYearBarMotion();setupScrollReveal();
+  setupInteractionPolish();setupYearBarMotion();setupScrollReveal();setupFilterSidebar();
   try{
     const [events,config]=await Promise.all([getJson("./data/incidents.json"),getJson("./data/site.json")]);
     renderOverview(events,config);animateStats(events);
