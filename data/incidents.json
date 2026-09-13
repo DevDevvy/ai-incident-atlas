@@ -2458,20 +2458,29 @@
   {
     "date": "2026-09-12",
     "dateLabel": "Sep 12, 2026",
-    "title": "Anthropic CEO Dario Amodei calls for slowing frontier AI development",
-    "org": "Anthropic",
+    "title": "Amodei calls for slowing frontier AI development as Altman and Musk back key safety proposals",
+    "org": "Anthropic / OpenAI / xAI",
     "category": "Policy & warning",
     "evidence": "POLICY",
     "impact": 5,
     "confidence": "High",
-    "summary": "Amodei called for AI companies to slow the pace of increasingly powerful model development enough for safety measures, alignment work, and independent evaluation to catch up. His proposal includes persistent third-party evaluator access and broader industry/government coordination.",
-    "why": "The call is notable because it comes from the CEO of one of the labs competing at the frontier, immediately after cyber incidents, misuse reports, and safety-researcher departures.",
-    "caveat": "Amodei is not calling for ending AI development; he argues for pacing capabilities and coordinating safeguards.",
+    "summary": "Anthropic CEO Dario Amodei called for frontier AI companies to slow the pace of increasingly powerful model development enough for safety measures, alignment work, and independent evaluation to catch up. He proposed persistent access for independent third-party evaluators, stronger coordination among frontier labs, and broader government and international cooperation. OpenAI CEO Sam Altman subsequently expressed support for Amodei's independent-evaluator proposal, while xAI CEO Elon Musk publicly said that Amodei was right, creating an unusual public convergence among leaders of competing frontier AI companies.",
+    "why": "The event became more significant once leaders of competing frontier AI companies publicly backed parts of Amodei's argument. Rather than a safety warning coming only from Anthropic, the response suggested growing agreement among major frontier-AI leaders that model capabilities are advancing faster than existing evaluation, oversight, and containment systems. The statements followed a series of real-world cyber incidents, agent boundary crossings, misuse reports, and safety-researcher departures.",
+    "caveat": "This does not mean Anthropic, OpenAI, and xAI have agreed to a common development slowdown or regulatory framework. Amodei proposed a broader set of measures, while Altman's public support focused particularly on independent evaluation and Musk's endorsement was much less detailed. Their statements should therefore be treated as partial policy convergence, not a binding industry agreement or evidence that catastrophic outcomes are imminent.",
     "tags": [
       "Dario Amodei",
       "slowdown",
       "Anthropic",
-      "governance"
+      "governance",
+      "Sam Altman",
+      "Elon Musk",
+      "frontier AI",
+      "AI slowdown",
+      "independent evaluation",
+      "AI safety",
+      "frontier governance",
+      "industry coordination",
+      "third-party evaluators"
     ],
     "sources": [
       {
