@@ -6,13 +6,16 @@ const root=process.cwd();
 const readJson=p=>JSON.parse(fs.readFileSync(path.join(root,p),'utf8'));
 const writeJson=(p,v)=>fs.writeFileSync(path.join(root,p),`${JSON.stringify(v,null,2)}\n`);
 const allowedFields=new Set(['date','dateLabel','title','org','category','evidence','impact','confidence','summary','why','caveat','tags','sources','themes']);
+const normalizePatchedSource=source=>{
+  if(!source||typeof source!=='object')return source;
+  if(!Object.hasOwn(source,'kind'))throw new Error('Updated sources must include kind for every source.');
+  return {...source,kind:normalizeSourceKind(source.kind)};
+};
 const normalizePatchChanges=changes=>Object.hasOwn(changes,'sources')
   ? {
       ...changes,
       sources: Array.isArray(changes.sources)
-        ? changes.sources.map(source=>source&&typeof source==='object'
-          ? {...source,kind:normalizeSourceKind(source.kind)}
-          : source)
+        ? changes.sources.map(normalizePatchedSource)
         : changes.sources
     }
   : changes;
