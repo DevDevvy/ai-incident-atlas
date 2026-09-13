@@ -21,6 +21,34 @@ const expectedSocialHash="684d55e8d0fa514b5629b1196b35e6a0439321b95261eff7ca9eb8
 if(socialHash!==expectedSocialHash)throw new Error(`Social card checksum mismatch: ${socialHash}`);
 fs.writeFileSync(path.join(dist,"assets","social-card.jpg"),socialCard);
 
+const indexPath=path.join(dist,"index.html");
+const oldSocialMeta=`<meta name="description" content="A sourced interactive research atlas of major AI incidents, evaluations, controversies, resignations, governance failures, misuse cases, and real-world agent boundary crossings.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI Incident Atlas">
+<meta property="og:description" content="Explore how AI risk changed from hallucinations and deepfakes to deception evaluations, agentic specification gaming, and real-world boundary crossings.">
+<meta name="twitter:card" content="summary">`;
+const newSocialMeta=`<meta name="description" content="An open-source interactive research atlas of major AI incidents, safety events, governance controversies, misuse cases, and real-world agent boundary crossings.">
+<link rel="canonical" href="https://devdevvy.github.io/ai-incident-atlas/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI Incident Atlas">
+<meta property="og:url" content="https://devdevvy.github.io/ai-incident-atlas/">
+<meta property="og:title" content="AI Incident Atlas">
+<meta property="og:description" content="An open-source timeline of major AI incidents, safety events, governance controversies, and real-world agent behavior.">
+<meta property="og:image" content="https://devdevvy.github.io/ai-incident-atlas/assets/social-card.jpg">
+<meta property="og:image:secure_url" content="https://devdevvy.github.io/ai-incident-atlas/assets/social-card.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="600">
+<meta property="og:image:height" content="315">
+<meta property="og:image:alt" content="AI Incident Atlas branded share card showing the research timeline, contribution form, and incident detail interface.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Incident Atlas">
+<meta name="twitter:description" content="An open-source timeline of major AI incidents, safety events, governance controversies, and real-world agent behavior.">
+<meta name="twitter:image" content="https://devdevvy.github.io/ai-incident-atlas/assets/social-card.jpg">
+<meta name="twitter:image:alt" content="AI Incident Atlas branded share card showing the research timeline, contribution form, and incident detail interface.">`;
+const indexHtml=fs.readFileSync(indexPath,"utf8");
+if(!indexHtml.includes(oldSocialMeta))throw new Error("Expected social metadata block was not found in index.html");
+fs.writeFileSync(indexPath,indexHtml.replace(oldSocialMeta,newSocialMeta));
+
 fs.writeFileSync(path.join(dist,".nojekyll"),"");
 if(fs.existsSync(path.join(root,"CNAME")))copy("CNAME");
 console.log("✓ Built static site into dist/");
