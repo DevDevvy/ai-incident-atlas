@@ -55,6 +55,11 @@
     "description": "Website functionality issue"
   },
   {
+    "name": "enhancement",
+    "color": "A2EEEF",
+    "description": "Platform or contributor-experience improvement"
+  },
+  {
     "name": "editorial",
     "color": "8B5CF6",
     "description": "Editorial or methodology discussion"
