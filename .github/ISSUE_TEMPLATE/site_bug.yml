@@ -3,6 +3,10 @@ description: "Report a problem with the UI, filters, mobile layout, exports, lin
 title: "[Site bug]: "
 labels: ["site-bug"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a problem. Search existing issues first and include enough detail for another contributor to reproduce it. Sensitive security vulnerabilities should follow `SECURITY.md`, not this public form.
   - type: textarea
     id: problem
     attributes: { label: "What happened?" }
@@ -16,9 +20,28 @@ body:
         2. Click ...
         3. See ...
     validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes: { label: "What did you expect to happen?" }
+    validations: { required: true }
+  - type: input
+    id: url
+    attributes: { label: "Affected page or link", placeholder: "https://devdevvy.github.io/ai-incident-atlas/" }
   - type: input
     id: browser
     attributes: { label: "Browser and device", placeholder: "Chrome on macOS / Safari on iPhone" }
+    validations: { required: true }
   - type: textarea
     id: context
-    attributes: { label: "Screenshots or additional context" }
+    attributes:
+      label: Screenshots, console errors, or additional context
+      description: Remove personal or sensitive information before attaching screenshots or logs.
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Report checklist
+      options:
+        - label: I searched open issues for the same problem.
+          required: true
+        - label: I can share more reproduction details if a contributor asks.
+          required: true

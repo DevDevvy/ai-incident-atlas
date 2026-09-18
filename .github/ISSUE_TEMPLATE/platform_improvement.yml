@@ -1,0 +1,60 @@
+name: "Propose a platform improvement"
+description: "Suggest a focused improvement to the UI, accessibility, code, tests, automation, documentation, or contributor experience."
+title: "[Platform]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve the Atlas platform. Search existing issues first. For a small, well-understood fix, you may open a pull request directly; discuss large features, architectural changes, dependencies, or redesigns here before investing substantial work.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - User interface / design
+        - Accessibility
+        - Application behavior
+        - Performance
+        - Tests / validation
+        - Build / deployment / automation
+        - Documentation
+        - Contributor experience
+        - Other
+    validations: { required: true }
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe the user or contributor need before proposing implementation details.
+    validations: { required: true }
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed improvement
+      description: Explain the desired behavior and, if useful, a possible implementation.
+    validations: { required: true }
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives or tradeoffs
+      description: Optional. Note other approaches, compatibility concerns, or intentionally excluded scope.
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Mockups, examples, or additional context
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      options:
+        - label: I searched existing issues for a similar proposal.
+          required: true
+        - label: I would be interested in submitting a pull request for this improvement.
+          required: false

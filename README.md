@@ -148,13 +148,20 @@ The repository includes `.github/workflows/pages.yml`. Every merge/push to `main
 
 After the first push, enable **Settings → Pages → Source: GitHub Actions** once. See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md). If you already use the GitHub CLI, `bash scripts/enable-pages.sh` can perform that one-time Pages configuration through GitHub's API.
 
-## Community submissions
+## Contributing
+
+AI Incident Atlas welcomes contributions to the platform code, interface, accessibility, documentation, tests, automation, and research dataset.
+
+To work on the site, fork the repository, create a focused branch, run the dependency-free project locally with `npm run dev`, and open a pull request. Start with [`CONTRIBUTING.md`](CONTRIBUTING.md) for the complete setup, testing, code map, and review workflow.
+
+Use **Issues → New issue** to report a site bug, propose a platform improvement, submit a new incident, or correct an existing record. Please follow [`SECURITY.md`](SECURITY.md) instead of opening a public issue for sensitive vulnerabilities.
+
+## Research submissions
 
 Use **Issues → New issue** for structured forms:
 
 - Submit a new AI incident
 - Correct/update an existing incident
-- Report a site bug
 
 New incident submissions begin as `data-submission` + `needs-verification`.
 
