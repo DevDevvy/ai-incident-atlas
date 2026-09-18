@@ -33,7 +33,7 @@ Include reproduction steps, browser/device details, screenshots, console errors,
 Fork the repository on GitHub, then clone your fork and add this repository as `upstream`:
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/ai-incident-atlas.git
+git clone https://github.com/devdevvy/ai-incident-atlas.git
 cd ai-incident-atlas
 git remote add upstream https://github.com/DevDevvy/ai-incident-atlas.git
 ```
