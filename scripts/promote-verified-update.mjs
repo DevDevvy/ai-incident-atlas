@@ -28,6 +28,7 @@ const event=JSON.parse(fs.readFileSync(eventPath,'utf8'));
 const issue=event.issue;
 const labels=new Set((issue.labels||[]).map(x=>typeof x==='string'?x:x.name));
 if(!labels.has('correction')||!labels.has('verified'))throw new Error('Verified correction issue required.');
+if(labels.has('data-submission'))throw new Error('New-incident submissions cannot be promoted as corrections.');
 if(labels.has('pr-created')||labels.has('published'))throw new Error('Issue was already promoted.');
 
 const sections=parseIssueSections(issue.body||'');

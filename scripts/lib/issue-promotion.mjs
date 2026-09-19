@@ -132,6 +132,7 @@ export function issueToIncident(issue, config, incidents) {
 
   const labels = new Set((issue.labels || []).map((x) => typeof x === 'string' ? x : x.name));
   if (!labels.has('data-submission')) throw new Error('Only issues labeled data-submission can be promoted.');
+  if (labels.has('correction')) throw new Error('Correction issues cannot be promoted as new incidents.');
   if (!labels.has('verified')) throw new Error('Issue must be labeled verified before promotion.');
   if (labels.has('pr-created') || labels.has('published')) throw new Error('This issue has already been promoted.');
 

@@ -114,6 +114,10 @@ assert.throws(
   /already been promoted/
 );
 assert.throws(
+  () => issueToIncident({...issue, labels:[{name:'data-submission'},{name:'correction'},{name:'verified'}]}, config, []),
+  /cannot be promoted as new incidents/
+);
+assert.throws(
   () => issueToIncident(issue, config, [{...record}]),
   /Duplicate incident id/
 );
@@ -128,7 +132,7 @@ const inserted = insertIncident(existing, {id:'new', date:'2025-01-16'});
 assert.deepEqual(inserted.map((x)=>x.id), ['before','same-z','same-a','new','after']);
 assert.deepEqual(existing.map((x)=>x.id), ['before','same-z','same-a','after']);
 
-function runPromoteUpdate(changes) {
+function runPromoteUpdate(changes, additionalLabels = []) {
   const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'atlas-promote-test-'));
   try {
     fs.mkdirSync(path.join(tempRoot, 'scripts', 'lib'), {recursive:true});
@@ -155,7 +159,7 @@ function runPromoteUpdate(changes) {
     fs.writeFileSync(path.join(tempRoot, 'event.json'), JSON.stringify({
       issue:{
         number:15,
-        labels:[{name:'verified'},{name:'correction'}],
+        labels:[{name:'verified'},{name:'correction'}, ...additionalLabels.map((name) => ({name}))],
         body:`### Incident ID
 
 openai-agents-flood-rubygems-during-internal-activity
@@ -218,5 +222,9 @@ const invalidSourcesShape = runPromoteUpdate({
 });
 assert.notEqual(invalidSourcesShape.result.status, 0);
 assert.match(`${invalidSourcesShape.result.stderr}\n${invalidSourcesShape.result.stdout}`, /Updated sources must be an array/);
+
+const ambiguousUpdate = runPromoteUpdate({summary:'Updated summary.'}, ['data-submission']);
+assert.notEqual(ambiguousUpdate.result.status, 0);
+assert.match(`${ambiguousUpdate.result.stderr}\n${ambiguousUpdate.result.stdout}`, /cannot be promoted as corrections/);
 
 console.log('✓ Verified issue promotion parser and stable insertion tests passed.');
