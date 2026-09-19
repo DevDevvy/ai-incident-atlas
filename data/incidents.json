@@ -2555,5 +2555,59 @@
       "Labor & society",
       "Deepfakes & misuse"
     ]
+  },
+  {
+    "date": "2026-09-17",
+    "dateLabel": "Sep 17–18, 2026",
+    "title": "Anthropic says Claude now leads 26% of its AI R&D as it tracks progress toward recursive self-improvement",
+    "org": "Anthropic / Anthropic Institute / Claude",
+    "category": "Context milestone",
+    "evidence": "REAL",
+    "impact": 5,
+    "confidence": "High",
+    "summary": "Anthropic published internal measurements intended to quantify how much artificial intelligence is participating in the development of future AI systems. As of August 2026, Anthropic said Claude “leads” 26% of its AI research and development work, meaning it can complete most of those tasks end-to-end from a high-level prompt while a human supervises. More than 90% of measured AI R&D was at least collaborative with Claude, although Anthropic reported no measured area in which Claude operated fully autonomously without a human in the loop. The company also reported approximately 30,000 AI agents doing research and engineering work at any one time on its most-used internal agent platform.\n\nAnthropic separately reported that more than 80% of code merged into its production codebase could be attributed to Claude as of May 2026, while engineering output per person had risen sharply as agentic coding became more capable.",
+    "why": "This marks a transition from recursive self-improvement being discussed mainly as a future scenario to frontier labs measuring concrete precursors inside their own development process. Anthropic is now using AI not only to write code but to run experiments, investigate failures, propose research steps, review code, and perform substantial portions of the work used to develop future models. The company explicitly presented these measurements as a way to track how close frontier labs are getting to systems capable of autonomously developing their successors. It does not demonstrate full recursive self-improvement, but it provides unusually concrete evidence that the human role in frontier-model development is shrinking and that AI is already accelerating the process that produces more capable AI.",
+    "caveat": "Anthropic explicitly says Claude has not reached fully autonomous AI research and development and does not currently autonomously design, train, evaluate, and deploy its own successor. Humans still play an important role in choosing research goals, exercising judgment, supervising agents, reviewing results, and making deployment decisions. The 26% figure measures the share of Anthropic’s catalogued R&D work classified as AI-led under its automation framework; it should not be interpreted as meaning that Claude autonomously built 26% of its successor. The measurements are also largely developed and evaluated internally by Anthropic, sometimes using Claude itself as a judge, and have not yet been independently validated across frontier labs.",
+    "tags": [
+      "recursive self-improvement",
+      "AI R&D automation",
+      "automated AI research",
+      "Claude",
+      "Anthropic",
+      "AI agents",
+      "agentic research",
+      "model development",
+      "human oversight",
+      "frontier AI",
+      "AI acceleration",
+      "research automation"
+    ],
+    "sources": [
+      {
+        "label": "Primary",
+        "url": "https://www.anthropic.com/institute/measuring-pace-of-ai-development",
+        "kind": "Primary / official"
+      },
+      {
+        "label": "Primary",
+        "url": "https://www.anthropic.com/institute/recursive-self-improvement",
+        "kind": "Primary / official"
+      },
+      {
+        "label": "Reuters",
+        "url": "https://www.reuters.com/business/anthropic-says-claude-now-leads-quarter-work-building-its-next-ai-models-2026-09-17",
+        "kind": "Reporting"
+      },
+      {
+        "label": "Associated Press",
+        "url": "https://apnews.com/article/anthropic-claude-ai-model-self-improvement-4d3a7430f57cbc7c39e1c5f2b7d7e132",
+        "kind": "Reporting"
+      }
+    ],
+    "id": "anthropic-says-claude-now-leads-26-of-its-ai-r-d-as-it-tracks-progress-toward-recursive-self-improvement",
+    "themes": [
+      "Agents & autonomy",
+      "Governance & insiders"
+    ]
   }
 ]
