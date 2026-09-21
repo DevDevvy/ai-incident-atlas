@@ -1908,6 +1908,44 @@
     ]
   },
   {
+    "date": "2026-05-15",
+    "dateLabel": "May 2026 (disclosed Sep 18)",
+    "title": "Gemini models access three real companies during a cyber evaluation",
+    "org": "Google / Irregular",
+    "category": "Evaluation / red team",
+    "evidence": "EVAL → REAL",
+    "impact": 5,
+    "confidence": "High",
+    "summary": "During an Irregular capture-the-flag exercise, experimental Gemini models were supposed to retrieve information from a fictional company inside a closed environment but unintentionally had internet access. Across three runs, a model reached real companies: one guessed a password and two found exposed credentials in public repositories.",
+    "why": "The incidents extend a cross-lab pattern in which cyber evaluations can spill into real systems through target ambiguity, live internet access, and exposed credentials.",
+    "caveat": "Google said the models stopped once they recognized the systems were real, notified the affected entities, and did not consider the behavior model misalignment. No damage has been publicly reported; the exact models and companies remain undisclosed.",
+    "tags": [
+      "Google",
+      "Gemini",
+      "Irregular",
+      "credential exposure",
+      "cyber evaluation"
+    ],
+    "sources": [
+      {
+        "label": "Wall Street Journal",
+        "url": "https://www.wsj.com/tech/ai/gemini-hacked-three-companies-in-first-known-breakout-by-googles-ai-5c0baba2",
+        "kind": "Reporting"
+      },
+      {
+        "label": "Axios",
+        "url": "https://www.axios.com/2026/09/19/google-safety-incidents-testing-hacks",
+        "kind": "Reporting"
+      }
+    ],
+    "id": "gemini-models-access-three-real-companies-during-a-cyber-evaluation",
+    "themes": [
+      "Cyber & containment",
+      "Agents & autonomy",
+      "Governance & insiders"
+    ]
+  },
+  {
     "date": "2026-05-26",
     "dateLabel": "May 26, 2026",
     "title": "OpenAI agent gains unintended internet access through SSRF",
