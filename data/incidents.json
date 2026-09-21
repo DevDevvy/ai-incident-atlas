@@ -2609,5 +2609,48 @@
       "Agents & autonomy",
       "Governance & insiders"
     ]
+  },
+  {
+    "date": "2026-09-20",
+    "dateLabel": "Sep 20–21, 2026",
+    "title": "U.S. says China agreed to an AI-safety dialogue and incident line",
+    "org": "United States / China",
+    "category": "Policy & warning",
+    "evidence": "POLICY",
+    "impact": 4,
+    "confidence": "High",
+    "summary": "After U.S.-China talks in New York, Treasury Secretary Scott Bessent said the two sides agreed to formalize an AI dialogue, meet again in Shenzhen in about two months, and develop an incident line and protocols for AI-safety events that could affect national security.",
+    "why": "A bilateral incident channel between the two leading AI powers could create a mechanism for communicating about uncontrollable agents, non-state cyber actors, and other cross-border AI risks before they escalate.",
+    "caveat": "The mechanism is not yet operational (as of Sep 21, 2026) and its thresholds, participants, and protocols remain undefined. China's public readout confirmed AI dialogue but did not publicly confirm the incident-line details.",
+    "tags": [
+      "\"United States\"",
+      "\"China\"",
+      "\"incident reporting\"",
+      "\"AI diplomacy\"",
+      "\"national security\""
+    ],
+    "sources": [
+      {
+        "label": "Primary",
+        "url": "https://english.www.gov.cn/news/202609/21/content_WS6ab09a80c6d00ca5f9a0d489.html",
+        "kind": "Primary / official"
+      },
+      {
+        "label": "Reuters",
+        "url": "https://www.marketscreener.com/news/us-china-to-meet-again-on-ai-safety-in-two-months-in-shenzhen-bessent-says-ce785adbdc8ef722",
+        "kind": "Reporting"
+      },
+      {
+        "label": "Associated Press",
+        "url": "https://apnews.com/article/bessent-ai-xi-trump-china-trade-2c7f54f07e755f506d9db9b91df282bd",
+        "kind": "Reporting"
+      }
+    ],
+    "id": "u-s-says-china-agreed-to-an-ai-safety-dialogue-and-incident-line",
+    "themes": [
+      "Governance & insiders",
+      "Cyber & containment",
+      "Agents & autonomy"
+    ]
   }
 ]
