@@ -2182,6 +2182,45 @@
     ]
   },
   {
+    "date": "2026-07-25",
+    "dateLabel": "Jul 23–25, 2026 (disclosed Sep 18)",
+    "title": "Researchers use Claude Opus 5 to reach OpenAI employee accounts and code repository",
+    "org": "Hacktron AI / Anthropic / OpenAI / Discourse",
+    "category": "Security / cyber",
+    "evidence": "REAL",
+    "impact": 4,
+    "confidence": "High",
+    "summary": "Hacktron researchers used Claude Opus 4.8 to identify an unpatched libheif memory-corruption path and Claude Opus 5 to turn it into a working exploit. They compromised OpenAI's Discourse forum, chained that access with an OpenAI single-sign-on flaw, reached several employees' ChatGPT and Codex accounts, and used one Codex connection to open a harmless pull request in OpenAI's internal monorepo.",
+    "why": "The episode showed a rapid jump in AI-assisted exploit development and how identity federation plus connected agent accounts can turn one server flaw into access to sensitive internal tools.",
+    "caveat": "This was human-directed white-hat research, not an autonomous Claude attack. The researchers disguised their own target as a CTF after Claude refused remote exploitation, reported the flaws promptly, stopped after the proof of concept, and said they did not read source code or access customer data. OpenAI fixed its side about 14 hours after the report.",
+    "tags": [
+      "Claude Opus 5",
+      "OpenAI",
+      "libheif",
+      "single sign-on",
+      "Codex",
+      "responsible disclosure"
+    ],
+    "sources": [
+      {
+        "label": "Primary",
+        "url": "https://www.hacktron.ai/blog/hacking-openai",
+        "kind": "Primary / official"
+      },
+      {
+        "label": "The Hacker News",
+        "url": "https://thehackernews.com/2026/09/claude-opus-5-helped-researchers-take.html",
+        "kind": "Reporting"
+      }
+    ],
+    "id": "researchers-use-claude-opus-5-to-reach-openai-employee-accounts-and-code-repository",
+    "themes": [
+      "Cyber & containment",
+      "Agents & autonomy",
+      "Governance & insiders"
+    ]
+  },
+  {
     "date": "2026-07-30",
     "dateLabel": "Jul 30, 2026",
     "title": "Anthropic discloses three Claude cyber evals that reached real organizations",
