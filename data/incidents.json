@@ -1829,6 +1829,45 @@
     ]
   },
   {
+    "date": "2026-04-15",
+    "dateLabel": "Spring 2026 (reported Sep 18)",
+    "title": "AI-assisted false intelligence nearly triggers U.S. boarding of Chinese ship",
+    "org": "U.S. Special Operations Command / U.S. military",
+    "category": "Model failure",
+    "evidence": "REAL",
+    "impact": 5,
+    "confidence": "Medium",
+    "summary": "CNN reported that a special-operations analyst used a chatbot to combine open-source and classified signals intelligence about a Chinese ship's manifest, producing a false claim that the vessel carried nuclear-weapons-program components. The analyst then used AI to package the finding as a standard intelligence report. Armed personnel prepared to board the ship and military aircraft were airborne before officials rechecked the report and stopped the operation.",
+    "why": "The near-miss shows how an AI error can become operational intelligence and approach a military decision point when provenance and human review fail in a high-stakes workflow.",
+    "caveat": "The chatbot and vendor were not identified, the underlying prompts, outputs, and cargo evidence are not public, and the account relies on four anonymous sources. CNN reported that the Pentagon and Special Operations Command Pacific did not respond to requests for comment.",
+    "tags": [
+      "military intelligence",
+      "hallucination",
+      "China",
+      "shipping",
+      "nuclear weapons",
+      "human review"
+    ],
+    "sources": [
+      {
+        "label": "CNN",
+        "url": "https://www.cnn.com/2026/09/18/politics/us-military-ai-false-intelligence-china-ship",
+        "kind": "Reporting"
+      },
+      {
+        "label": "Ars Technica",
+        "url": "https://arstechnica.com/ai/2026/09/report-us-almost-boarded-chinese-ship-over-hallucinated-ai-arms-report/",
+        "kind": "Reporting"
+      }
+    ],
+    "id": "ai-assisted-false-intelligence-nearly-triggers-u-s-boarding-of-chinese-ship",
+    "themes": [
+      "Reliability & hallucination",
+      "Governance & insiders",
+      "Human safety & dependency"
+    ]
+  },
+  {
     "date": "2026-05-11",
     "dateLabel": "May 11, 2026 (reported Sep)",
     "title": "OpenAI evaluation agents linked to malicious RubyGems package campaign",
