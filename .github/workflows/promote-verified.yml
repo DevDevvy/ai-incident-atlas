@@ -1,0 +1,94 @@
+name: Route verified incident promotion
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  statuses: write
+
+# Label webhooks carry a snapshot of the issue. Serialize by issue number so a
+# second verification event cannot pass an outdated snapshot while the first
+# promotion is still creating its PR and applying pr-created.
+concurrency:
+  group: promote-issue-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  route:
+    if: github.event.label.name == 'verified'
+    runs-on: ubuntu-latest
+    outputs:
+      kind: ${{ steps.route.outputs.kind }}
+
+    steps:
+      - name: Route and de-duplicate verified promotion
+        id: route
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const issueNumber = context.issue.number;
+            core.setOutput('kind', 'none');
+
+            // Read current state instead of trusting the label-event snapshot.
+            const { data: issue } = await github.rest.issues.get({
+              owner,
+              repo,
+              issue_number: issueNumber,
+            });
+            const labels = new Set(issue.labels.map((label) =>
+              typeof label === 'string' ? label : label.name
+            ));
+
+            if (!labels.has('verified')) {
+              core.notice('The issue is no longer verified; skipping promotion.');
+              return;
+            }
+            if (labels.has('pr-created') || labels.has('published')) {
+              core.notice('The issue has already been promoted; skipping duplicate event.');
+              return;
+            }
+
+            const isNewIncident = labels.has('data-submission');
+            const isUpdate = labels.has('correction');
+            if (isNewIncident && isUpdate) {
+              core.setFailed('Issue cannot be both data-submission and correction. Remove the incorrect label and verify again.');
+              return;
+            }
+            if (!isNewIncident && !isUpdate) {
+              core.notice('Verified issue is not an Atlas data submission or correction; nothing to promote.');
+              return;
+            }
+
+            // Labels can be edited after a promotion. The PR marker is the
+            // durable idempotency key, including for merged or closed PRs.
+            const marker = `<!-- atlas-source-issue: ${issueNumber} -->`;
+            const pulls = await github.paginate(github.rest.pulls.list, {
+              owner,
+              repo,
+              state: 'all',
+              per_page: 100,
+            });
+            const existing = pulls.find((pull) => pull.body?.includes(marker));
+            if (existing) {
+              core.notice(`Issue already has promotion PR #${existing.number}; skipping duplicate event.`);
+              return;
+            }
+
+            core.setOutput('kind', isUpdate ? 'update' : 'new');
+
+  promote-new:
+    needs: route
+    if: needs.route.outputs.kind == 'new'
+    uses: ./.github/workflows/promote-verified-issue.yml
+    secrets: inherit
+
+  promote-update:
+    needs: route
+    if: needs.route.outputs.kind == 'update'
+    uses: ./.github/workflows/promote-verified-update.yml
+    secrets: inherit

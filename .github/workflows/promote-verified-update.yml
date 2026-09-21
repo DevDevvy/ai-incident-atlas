@@ -1,8 +1,7 @@
 name: Promote verified incident update
 
 on:
-  issues:
-    types: [labeled]
+  workflow_call:
 
 permissions:
   contents: write
@@ -10,15 +9,12 @@ permissions:
   issues: write
   statuses: write
 
-concurrency:
-  group: promote-update-${{ github.event.issue.number }}
-  cancel-in-progress: false
-
 jobs:
   promote:
     if: >-
       github.event.label.name == 'verified' &&
       contains(github.event.issue.labels.*.name, 'correction') &&
+      !contains(github.event.issue.labels.*.name, 'data-submission') &&
       !contains(github.event.issue.labels.*.name, 'pr-created') &&
       !contains(github.event.issue.labels.*.name, 'published')
     runs-on: ubuntu-latest
