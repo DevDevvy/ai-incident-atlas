@@ -2688,6 +2688,43 @@
     ]
   },
   {
+    "date": "2026-09-18",
+    "dateLabel": "Sep 18, 2026",
+    "title": "Subscribers sue frontier labs over alleged coordinated AI slowdown",
+    "org": "Anthropic / OpenAI / SpaceXAI / Google",
+    "category": "Legal & rights",
+    "evidence": "LEGAL",
+    "impact": 3,
+    "confidence": "High",
+    "summary": "Four paid subscribers filed a proposed nationwide class action, Buist v. Anthropic, alleging that Anthropic, OpenAI, SpaceXAI, and Google violated Section 1 of the Sherman Act by agreeing to slow improvement of ChatGPT, Claude, Grok, and Gemini. The complaint seeks treble damages and an injunction against coordinated pacing restraints.",
+    "why": "The case turns cross-lab safety coordination into a direct test of antitrust boundaries and could affect how frontier labs discuss pacing, shared standards, and development limits.",
+    "caveat": "These are allegations in a newly filed complaint, not findings. Public agreement with a safety proposal and participation in standards talks do not by themselves establish an unlawful agreement, and the defendants had not responded when initial reports were published.",
+    "tags": [
+      "Buist v. Anthropic",
+      "antitrust",
+      "Sherman Act",
+      "AI slowdown",
+      "class action"
+    ],
+    "sources": [
+      {
+        "label": "Primary",
+        "url": "https://storage.courtlistener.com/recap/gov.uscourts.cand.479357/gov.uscourts.cand.479357.1.0.pdf",
+        "kind": "Primary / official"
+      },
+      {
+        "label": "Associated Press",
+        "url": "https://apnews.com/article/antitrust-lawsuit-ai-slowdown-anthropic-openai-spacexai-google-960af4308161eaf4ed13c383b0ce1c1b",
+        "kind": "Reporting"
+      }
+    ],
+    "id": "subscribers-sue-frontier-labs-over-alleged-coordinated-ai-slowdown",
+    "themes": [
+      "Governance & insiders",
+      "Other"
+    ]
+  },
+  {
     "date": "2026-09-20",
     "dateLabel": "Sep 20–21, 2026",
     "title": "U.S. says China agreed to an AI-safety dialogue and incident line",
