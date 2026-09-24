@@ -9,7 +9,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "validate": "node scripts/validate-data.mjs && node --check assets/app.js && node --check assets/enhancements.js && node --check assets/update-editor.js && node --check scripts/promote-verified-update.mjs",
+    "validate": "node scripts/validate-data.mjs && node --check assets/app.js && node --check assets/enhancements.js && node --check assets/update-editor.js && node --check scripts/promote-verified-update.mjs && node --check scripts/add-incidents-bulk.mjs",
     "audit": "node scripts/audit-data.mjs",
     "build": "node scripts/build.mjs",
     "test:promotion": "node scripts/test-issue-promotion.mjs",
