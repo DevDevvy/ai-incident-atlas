@@ -3028,5 +3028,45 @@
       "Human safety & dependency",
       "Governance & insiders"
     ]
+  },
+  {
+    "date": "2026-09-21",
+    "dateLabel": "Sep 21–22, 2026",
+    "title": "Meta Muse local endpoint flaw enables agent-session hijacking",
+    "org": "Meta Muse / Patrick Wardle",
+    "category": "Security / cyber",
+    "evidence": "REAL",
+    "impact": 4,
+    "confidence": "High",
+    "summary": "Security researcher Patrick Wardle demonstrated that an unprivileged local process could alter an undocumented Muse endpoint setting, redirect transcription traffic to an attacker-controlled service, capture prompts and authentication material, inject prompts, and abuse the broader permissions available to the Muse agent. Meta issued a hotfix.",
+    "why": "Agent software can amplify a conventional local-client vulnerability because compromising the trusted agent control path may let ordinary malware reuse permissions and authenticated relationships already granted to the agent.",
+    "caveat": "There is no evidence of exploitation in the wild. The attack required malicious code already executing as the logged-in Mac user, so it was an access-amplification flaw rather than a remote compromise of an untouched device.",
+    "tags": [
+      "Meta Muse",
+      "macOS",
+      "zero-day",
+      "session hijacking",
+      "authentication token",
+      "prompt injection",
+      "privilege amplification"
+    ],
+    "sources": [
+      {
+        "label": "Patrick Wardle proof of concept",
+        "url": "https://github.com/pwardle/not-a-mused",
+        "kind": "Reference"
+      },
+      {
+        "label": "The Verge",
+        "url": "https://www.theverge.com/tech/998679/meta-muse-patch-zero-day-exploit-ai-agent",
+        "kind": "Reporting"
+      }
+    ],
+    "id": "meta-muse-local-endpoint-flaw-enables-agent-session-hijacking",
+    "themes": [
+      "Cyber & containment",
+      "Agents & autonomy",
+      "Privacy & surveillance"
+    ]
   }
 ]
