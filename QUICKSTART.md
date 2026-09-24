@@ -53,3 +53,21 @@ npm run preview
 ```
 
 Open `http://127.0.0.1:8080`.
+
+## 5. Bulk-import researched incidents
+
+Put a JSON array of complete incident records under `data/imports/` (or another local path), then run:
+
+```bash
+npm run add:incidents -- data/imports/YOUR-BATCH.json
+```
+
+The importer rejects duplicate IDs and titles, inserts every record in chronological order, and runs the existing dataset validator. If validation fails, it restores the original `data/incidents.json` instead of leaving a partial batch behind.
+
+To test a batch without changing the canonical dataset:
+
+```bash
+npm run add:incidents -- data/imports/YOUR-BATCH.json --dry-run
+```
+
+The September 24, 2026 research batch is retained at `data/imports/2026-09-24-incidents.json` as an example of the expected format.
