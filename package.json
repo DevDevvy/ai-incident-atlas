@@ -17,6 +17,7 @@
     "dev": "node scripts/serve.mjs . 8080",
     "preview": "node scripts/build.mjs && node scripts/serve.mjs dist 8080",
     "add:incident": "node scripts/add-incident.mjs",
+    "add:incidents": "node scripts/add-incidents-bulk.mjs",
     "promote:issue": "node scripts/promote-verified-issue.mjs",
     "promote:update": "node scripts/promote-verified-update.mjs"
   }
