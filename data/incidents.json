@@ -2989,5 +2989,44 @@
       "Cyber & containment",
       "Agents & autonomy"
     ]
+  },
+  {
+    "date": "2026-09-21",
+    "dateLabel": "Sep 21, 2026",
+    "title": "British Columbia sues OpenAI over alleged ChatGPT role in Tumbler Ridge shooting",
+    "org": "Province of British Columbia / OpenAI / ChatGPT",
+    "category": "Legal & rights",
+    "evidence": "LEGAL",
+    "impact": 4,
+    "confidence": "High",
+    "summary": "British Columbia filed a lawsuit against OpenAI and Sam Altman over the February 2026 Tumbler Ridge school shooting. The province alleges OpenAI had flagged concerning gun-violence conversations associated with the shooter but failed to notify law enforcement before the attack.",
+    "why": "The case creates a concrete legal and governance test around what responsibilities an AI provider may have after internal safety systems identify what the provider considers a credible threat of real-world violence.",
+    "caveat": "The lawsuit's causal and duty-to-warn claims are allegations being litigated, not established findings. The Atlas entry records the filing and the government's allegations rather than concluding that ChatGPT caused the shooting or that OpenAI could legally have prevented it.",
+    "tags": [
+      "Tumbler Ridge",
+      "ChatGPT",
+      "lawsuit",
+      "duty to warn",
+      "violent threats",
+      "safety monitoring",
+      "law enforcement"
+    ],
+    "sources": [
+      {
+        "label": "Government of British Columbia",
+        "url": "https://news.gov.bc.ca/releases/2026AG0067-001105",
+        "kind": "Reference"
+      },
+      {
+        "label": "Reuters",
+        "url": "https://www.reuters.com/legal/government/british-columbia-sues-openai-over-tumbler-ridge-school-shooting-2026-09-21/",
+        "kind": "Reporting"
+      }
+    ],
+    "id": "british-columbia-sues-openai-over-alleged-chatgpt-role-in-tumbler-ridge-shooting",
+    "themes": [
+      "Human safety & dependency",
+      "Governance & insiders"
+    ]
   }
 ]
