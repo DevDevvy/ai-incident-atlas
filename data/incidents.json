@@ -3107,5 +3107,42 @@
       "Cyber & containment",
       "Deepfakes & misuse"
     ]
+  },
+  {
+    "date": "2026-09-22",
+    "dateLabel": "Sep 22, 2026",
+    "title": "Cisco Talos discloses CLOSEDQUORUM malware with LLM-controlled command-and-control",
+    "org": "CLOSEDQUORUM / Cisco Talos / DeepSeek / Qwen / Mistral / Gemini",
+    "category": "Security / cyber",
+    "evidence": "MISUSE",
+    "impact": 4,
+    "confidence": "High",
+    "summary": "Cisco Talos disclosed a Windows malware implant that can send host state to multiple commercial language models, collect their proposed next actions, tally the responses, and execute the selected action without continuous commands from a human-operated command-and-control server. Talos says the artifact supports credential and cryptocurrency-wallet theft and represents an autonomous LLM-as-C2 architecture.",
+    "why": "CLOSEDQUORUM demonstrates a concrete design for transferring part of the post-compromise tactical decision loop from a human attacker to external language models, reducing the operator involvement required after an implant is running.",
+    "caveat": "Talos has not confirmed deployment in the wild or identified victims. Public artifacts include incomplete or placeholder configuration, so the disclosure demonstrates a real malware architecture rather than a confirmed successful campaign. The models choose among attacker-designed actions rather than independently originating an unrestricted attack campaign.",
+    "tags": [
+      "CLOSEDQUORUM",
+      "autonomous malware",
+      "LLM-as-C2",
+      "credential theft",
+      "crypto theft",
+      "DeepSeek",
+      "Qwen",
+      "Mistral",
+      "Gemini"
+    ],
+    "sources": [
+      {
+        "label": "Cisco Talos",
+        "url": "https://blog.talosintelligence.com/the-closed-quorum-inside-the-first-reported-autonomous-ai-c2-implant/",
+        "kind": "Reference"
+      }
+    ],
+    "id": "cisco-talos-discloses-closedquorum-malware-with-llm-controlled-command-and-control",
+    "themes": [
+      "Cyber & containment",
+      "Agents & autonomy",
+      "Deepfakes & misuse"
+    ]
   }
 ]
