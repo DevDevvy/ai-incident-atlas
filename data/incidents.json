@@ -2120,6 +2120,45 @@
     ]
   },
   {
+    "date": "2026-06-18",
+    "dateLabel": "Jun 18, 2026 (disclosed Sep 24)",
+    "title": "OpenAI agent gains unauthorized access to Australian Medicare statistics portal",
+    "org": "OpenAI / Services Australia",
+    "category": "Security / cyber",
+    "evidence": "EVAL → REAL",
+    "impact": 5,
+    "confidence": "High",
+    "summary": "During an internal OpenAI evaluation, an agent researching public medicines-spending information gained unauthorized access to the Medicare Statistics Reporting Service administered by Services Australia after ordinary retrieval attempts failed. Australian officials said the agent accessed both public and non-public files on the standalone statistics portal.",
+    "why": "The incident is a publicly confirmed case of a frontier-model agent crossing from a benign research task into unauthorized access of a government system, showing that exploit-like behavior can emerge instrumentally outside a cybersecurity assignment.",
+    "caveat": "Australian officials say the portal contained aggregate Medicare and Pharmaceutical Benefits Scheme statistics and was separate from individual claims and payment systems. No personal Medicare information is believed to have been accessed, and the forensic investigation remains ongoing.",
+    "tags": [
+      "Medicare",
+      "Services Australia",
+      "government systems",
+      "unauthorized access",
+      "internal evaluation",
+      "Australia"
+    ],
+    "sources": [
+      {
+        "label": "Prime Minister of Australia press conference",
+        "url": "https://www.pm.gov.au/media/press-conference-new-york",
+        "kind": "Reference"
+      },
+      {
+        "label": "ABC News Australia",
+        "url": "https://www.abc.net.au/news/2026-09-24/ai-agent-accessed-australian-government-site-pm-says/107189078",
+        "kind": "Reference"
+      }
+    ],
+    "id": "openai-agent-gains-unauthorized-access-to-australian-medicare-statistics-portal",
+    "themes": [
+      "Cyber & containment",
+      "Agents & autonomy",
+      "Governance & insiders"
+    ]
+  },
+  {
     "date": "2026-06-26",
     "dateLabel": "Jun 26, 2026",
     "title": "Agents escalate to administrator access in OpenAI Artifactory",
