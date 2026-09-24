@@ -2909,6 +2909,45 @@
     ]
   },
   {
+    "date": "2026-09-18",
+    "dateLabel": "Sep 18–24, 2026",
+    "title": "ZCode repository snapshots found uploading local Git data",
+    "org": "Z.ai / ZCode",
+    "category": "Privacy",
+    "evidence": "REAL",
+    "impact": 4,
+    "confidence": "High",
+    "summary": "A developer reported that ZCode created repository snapshots containing local workspace files and extensive .git history while logged in, including cases where repository snapshot indexing was disabled. The report documented accepted snapshot state containing Git metadata. Z.ai later removed the RepoWiki feature and repository-snapshot upload paths in version 3.14.0 after the controversy.",
+    "why": "Coding agents can access proprietary source, full commit histories, deleted historical secrets, configuration files, and developer metadata, so background repository transfer creates a much larger confidentiality boundary than ordinary chatbot telemetry.",
+    "caveat": "A frequently cited large encrypted archive was repeatedly attempted but not shown to have uploaded successfully; the public report does document successful smaller snapshot acceptance. Z.ai says stored objects were deleted and the data was not used for model training.",
+    "tags": [
+      "ZCode",
+      "source code",
+      "Git history",
+      "repository snapshots",
+      "developer privacy",
+      "coding agent"
+    ],
+    "sources": [
+      {
+        "label": "Z.ai feedback issue #707",
+        "url": "https://github.com/zai-org/feedback/issues/707",
+        "kind": "Reference"
+      },
+      {
+        "label": "TechNode",
+        "url": "https://technode.com/2026/09/24/zhipu-says-zcode-removed-repository-upload-paths-after-data-controversy/",
+        "kind": "Reference"
+      }
+    ],
+    "id": "zcode-repository-snapshots-found-uploading-local-git-data",
+    "themes": [
+      "Privacy & surveillance",
+      "Cyber & containment",
+      "Governance & insiders"
+    ]
+  },
+  {
     "date": "2026-09-20",
     "dateLabel": "Sep 20–21, 2026",
     "title": "U.S. says China agreed to an AI-safety dialogue and incident line",
