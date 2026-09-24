@@ -3068,5 +3068,44 @@
       "Agents & autonomy",
       "Privacy & surveillance"
     ]
+  },
+  {
+    "date": "2026-09-22",
+    "dateLabel": "Sep 22, 2026",
+    "title": "Microsoft disrupts AI-enabled EvilTokens platform linked to 12,000 compromised inboxes",
+    "org": "EvilTokens / Microsoft / Storm-2992",
+    "category": "Security / cyber",
+    "evidence": "MISUSE",
+    "impact": 5,
+    "confidence": "High",
+    "summary": "Microsoft says EvilTokens combined device-code phishing, account takeover, mailbox reconnaissance, and AI-assisted fraud planning in a commercial cybercrime service. Its AI tools analyzed compromised inboxes, mapped trusted relationships and payment workflows, identified valuable targets, and recommended impersonation strategies. Microsoft linked the service to more than 12,000 compromised inboxes across over 10,000 organizations.",
+    "why": "The platform moves beyond using an LLM to polish phishing text: AI was used after compromise to understand organizations and help decide who to target, who to impersonate, and where financial fraud was most likely to succeed.",
+    "caveat": "This was human-directed criminal misuse rather than autonomous model misalignment. Microsoft is an investigator and plaintiff in related legal action, and allegations against identified operators remain subject to legal process.",
+    "tags": [
+      "EvilTokens",
+      "phishing-as-a-service",
+      "business email compromise",
+      "device code phishing",
+      "AI-enabled fraud",
+      "Storm-2992",
+      "account takeover"
+    ],
+    "sources": [
+      {
+        "label": "Microsoft Digital Crimes Unit",
+        "url": "https://blogs.microsoft.com/on-the-issues/2026/09/22/disrupting-eviltokens-the-ai-chatbot-built-for-cybercrime/",
+        "kind": "Primary / official"
+      },
+      {
+        "label": "Microsoft Security",
+        "url": "https://www.microsoft.com/en-us/security/blog/2026/09/22/unmasking-eviltokens-getting-to-the-root-of-device-code-phishing/",
+        "kind": "Primary / official"
+      }
+    ],
+    "id": "microsoft-disrupts-ai-enabled-eviltokens-platform-linked-to-12-000-compromised-inboxes",
+    "themes": [
+      "Cyber & containment",
+      "Deepfakes & misuse"
+    ]
   }
 ]
