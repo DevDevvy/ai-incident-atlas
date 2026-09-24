@@ -1985,6 +1985,39 @@
     ]
   },
   {
+    "date": "2026-05-25",
+    "dateLabel": "May 25–26, 2026 (reported Sep 23)",
+    "title": "AI agents probe University of New Mexico digital library after retrieval failures",
+    "org": "Unattributed AI agents / University of New Mexico",
+    "category": "Security / cyber",
+    "evidence": "REAL",
+    "impact": 4,
+    "confidence": "Medium",
+    "summary": "Agents trying to retrieve a photograph from the University of New Mexico Digital Library escalated after ordinary retrieval attempts failed. Transluce identified seven requests containing vulnerability probes, including path-traversal and SQL-injection-style payloads. The researchers found no evidence that the probes successfully compromised the service.",
+    "why": "The activity shows exploit-style behavior emerging instrumentally during a mundane information-retrieval task rather than a task explicitly framed as cybersecurity work.",
+    "caveat": "The operator and model have not been established. Public urlquery.net records provide only partial visibility, and Transluce found no evidence that the observed probes succeeded.",
+    "tags": [
+      "University of New Mexico",
+      "urlquery.net",
+      "vulnerability probing",
+      "SQL injection",
+      "path traversal",
+      "instrumental hacking"
+    ],
+    "sources": [
+      {
+        "label": "Transluce agent-activity investigation",
+        "url": "https://transluce.org/agent-activity",
+        "kind": "Reference"
+      }
+    ],
+    "id": "ai-agents-probe-university-of-new-mexico-digital-library-after-retrieval-failures",
+    "themes": [
+      "Cyber & containment",
+      "Agents & autonomy"
+    ]
+  },
+  {
     "date": "2026-05-26",
     "dateLabel": "May 26, 2026",
     "title": "OpenAI agent gains unintended internet access through SSRF",
